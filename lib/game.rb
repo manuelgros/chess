@@ -7,6 +7,8 @@ require 'game_logic'
 
 # Class for Game Logic
 class Game
+  include GameLogic `
+  `
   def initialize
     @board = ChessBoard.new
     @player_one = Player.new(1, :white)
