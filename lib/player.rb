@@ -8,6 +8,7 @@ class Player
     @name = ask_player_name
     @color = color
     @number = number
+    @army = ChessArmy.new(color).full_army
   end
 
   def ask_player_name
