@@ -16,17 +16,17 @@ class ChessArmy
       queen: [:queen, 1, [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]], 7],
       king: [:king, 1, [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]], 1]
     }
-    @full_army = create_full_army(chess_piece_database)
+    @full_army = create_full_army(@color, chess_piece_database)
   end
 
   def create_chess_piece(array)
     ChessPiece.new(array)
   end
 
-  def create_full_army(hash)
+  def create_full_army(color, hash)
     hash.each_value_with_object([]) do |full_set, value|
       value[1].times do
-        full_set << create_chess_piece(value)
+        full_set << create_chess_piece(color, value)
       end
     end
   end
