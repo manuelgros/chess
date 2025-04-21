@@ -6,4 +6,6 @@ require_relative '../lib/chess_board'
 require_relative '../lib/game'
 
 # Run code her
-Game.new.setting_up_game
+game = Game.new
+game.setting_up_game
+puts game.board
