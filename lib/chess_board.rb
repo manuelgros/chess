@@ -3,17 +3,10 @@
 # Chess_board class
 class ChessBoard
   def initialize
-    @coordinates = create_board_coordinates
+    @square = create_board_squares
   end
 
-  def create_board_coordinates
-    Array.new(7) { Array 0..8 }
-  end
-
-  def create_chess_board
-    base_arr = Array 0..7
-    base_arr.each_with_object([]) do |first_ele, coordinates_arr|
-      base_arr.each { |second_arr| coordinates_arr << [first_ele, second_arr] }
-    end
+  def create_board_squares
+    Array.new(8) { Array.new(8) }
   end
 end
