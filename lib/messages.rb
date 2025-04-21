@@ -4,7 +4,7 @@
 module Messages
   def player_messages(message)
     {
-      get_name: "Type in name for Player#{@number}: "
+      get_name: "Type in name for Player #{@number} / #{@color}: "
     }[message]
   end
 
