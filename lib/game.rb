@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'player'
-require 'chess_board'
-require 'messages'
-require 'game_logic'
+require_relative '../lib/player'
+require_relative '../lib/chess_board'
+require_relative '../lib/messages'
+require_relative '../lib/game_logic'
 
 # Class for Game Logic
 class Game

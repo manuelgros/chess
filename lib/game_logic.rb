@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'player'
-require 'chess_board'
-require 'messages'
+require_relative '../lib/player'
+require_relative '../lib/chess_board'
+require_relative '../lib/messages'
 
 # Module for Game Logic
 module GameLogic

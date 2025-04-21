@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require 'messages'
+require_relative '../lib/messages'
 
 # Player Class
 class Player
+  include Messages
+  attr_reader :name, :color, :number, :army
+
   def initialize(number, color)
     @name = ask_player_name
     @color = color

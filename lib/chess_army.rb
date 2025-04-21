@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'chess_piece'
+require_relative '../lib/chess_piece'
 
 # Class for ChessArmy
 class ChessArmy
