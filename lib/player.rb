@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/messages'
+require_relative '../lib/chess_army'
 
 # Player Class
 class Player
@@ -15,7 +16,7 @@ class Player
   end
 
   def ask_player_name
-    print player_messages(get_name)
+    print player_messages(:get_name)
     gets.chomp
   end
 end

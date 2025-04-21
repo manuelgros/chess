@@ -23,7 +23,7 @@ class ChessArmy
     ChessPiece.new(color, array)
   end
 
-  def create_full_full_set(color, database)
+  def create_full_set(color, database)
     database.each_with_object({}) do |piece, full_set|
       full_set[piece[0]] = Array.new(piece[1]) { create_chess_piece(color, piece) }
     end
