@@ -4,7 +4,8 @@
 class ChessPiece
   attr_reader :type, :movement, :range
 
-  def initialize(array)
+  def initialize(color, array)
+    @color = color
     @type = array[0]
     @movement = array[2]
     @range = array[3]
