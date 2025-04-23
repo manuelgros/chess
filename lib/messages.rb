@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../lib/player'
+
 # Message module
 module Messages
   def player_messages(message)
     {
-      get_name: "Type in name for Player #{@number} / #{@color}: "
+      get_name: 'Type in name for Player: '
     }[message]
   end
 
