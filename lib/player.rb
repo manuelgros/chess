@@ -6,12 +6,11 @@ require_relative '../lib/chess_army'
 # Player Class
 class Player
   include Messages
-  attr_reader :name, :color, :number, :army
+  attr_reader :name, :color, :army
 
-  def initialize(number, color)
-    @name = ask_player_name
+  def initialize(color)
     @color = color
-    @number = number
+    @name = ask_player_name
     @army = ChessArmy.new(color)
   end
 

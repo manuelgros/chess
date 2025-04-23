@@ -12,8 +12,8 @@ class Game
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
-    @player_one = Player.new(1, :white)
-    @player_two = Player.new(2, :black)
+    @player_one = Player.new(:white)
+    @player_two = Player.new(:black)
   end
 
   def setting_up_game

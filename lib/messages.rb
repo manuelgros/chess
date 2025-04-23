@@ -6,7 +6,7 @@ require_relative '../lib/player'
 module Messages
   def player_messages(message)
     {
-      get_name: 'Type in name for Player: '
+      get_name: "Type in name for #{@color} Player: "
     }[message]
   end
 
