@@ -27,12 +27,15 @@ class ChessArmy
         full_set << create_chess_piece(color, type, attributes)
       end
     end
+    full_set
   end
 
   # Returns array with ChessPiece object in correct order for setup on board; setup_order from ChessPieceDatabase module
   # starting with major rank array[0..7] and pawn rank array[8..15]
-  def organize_pieces(full_set)
+  def sort_start_ranks
     expected_order = setup_order
-    expected_order.map { |type| full_set.find { |piece| piece.type == type }.shift }
+    expected_order.map do |type|
+      @full_set.delete_at(full_set_arr.find_index { |chess_piece| chess_piece.type == type })
+    end
   end
 end
