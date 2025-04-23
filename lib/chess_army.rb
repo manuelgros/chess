@@ -32,7 +32,7 @@ class ChessArmy
 
   # Returns array with ChessPiece object in correct order for setup on board; setup_order from ChessPieceDatabase module
   # starting with major rank array[0..7] and pawn rank array[8..15]
-  def sort_start_ranks
+  def sort_ranks_for_start
     expected_order = setup_order
     expected_order.map do |type|
       @full_set.delete_at(full_set_arr.find_index { |chess_piece| chess_piece.type == type })
