@@ -35,7 +35,7 @@ class ChessArmy
   def sort_ranks_for_start
     expected_order = setup_order
     expected_order.map do |type|
-      @full_set.delete_at(full_set_arr.find_index { |chess_piece| chess_piece.type == type })
+      @full_set.delete_at(@full_set.find_index { |chess_piece| chess_piece.type == type })
     end
   end
 end
