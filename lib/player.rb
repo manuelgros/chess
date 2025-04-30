@@ -20,7 +20,7 @@ class Player
     gets.chomp
   end
 
-  def select_pice
+  def select_piece
     print player_messages(:get_selection)
     selection = gets.chomp.digits
     if validate_input(selection) && !@board[selection[0]][selection[1]].nil?
