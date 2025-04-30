@@ -7,10 +7,13 @@ module Messages
   def player_messages(message)
     {
       get_name: "Type in name for #{@color} Player: "
+      get_selection: "Select Pice by coordinated: "
     }[message]
   end
 
   def game_messages(message)
-    {}[message]
+    {
+      input_error: "Invalid input. Please type coordinates on the X and Y axis between 0 and 7 (example: 24)"
+    }[message]
   end
 end
