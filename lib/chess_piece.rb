@@ -18,6 +18,4 @@ class ChessPiece
     end
     nil
   end
-
-  def validate_move; end
 end
