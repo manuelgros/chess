@@ -3,11 +3,10 @@
 # Chess_board class
 class ChessBoard
   def initialize
-    @board = create_board_squares
+    @squares = create_squares
   end
 
-  def create_board_squares
+  def create_squares
     Array.new(8) { Array.new(8) }
   end
-
 end
