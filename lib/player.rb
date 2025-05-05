@@ -32,11 +32,11 @@ class Player
   end
 
   def select_destination
-    print 'Where?'
+    print player_messages(:get_destination)
     selection = gets.chomp.digits
     return selection if validate_coordinate_input(selection)
 
-    puts game_messages(:input_error)
+    puts game_messages(:coord_input_error)
     select_destination
   end
 
