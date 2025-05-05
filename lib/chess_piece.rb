@@ -20,6 +20,4 @@ class ChessPiece
   end
 
   def validate_move; end
-
-  def move_piece; end
 end
