@@ -11,13 +11,14 @@ module Messages
   def player_messages(message)
     {
       get_name: "Type in name for #{@color} Player: ",
-      get_selection: 'Select Pice by coordinated: '
+      get_selection: 'Select piece by coordinated: ',
+      get_destination: 'Select filed to move the piece to: '
     }[message]
   end
 
   def game_messages(message)
     {
-      input_error: 'Invalid input. Please type coordinates on the X and Y axis between 0 and 7 (example: 24)'
+      coord_input_error: 'Invalid input. Please type coordinates on the X and Y axis between 0 and 7 (example: 24)'
     }[message]
   end
 end
