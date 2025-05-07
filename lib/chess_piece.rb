@@ -2,7 +2,7 @@
 
 # Class for single ChessPiece
 class ChessPiece
-  attr_reader :type, :movement, :range, :color, :board
+  attr_reader :color, :type, :movement, :range, :board
 
   def initialize(color, type, hash, board)
     @color = color
