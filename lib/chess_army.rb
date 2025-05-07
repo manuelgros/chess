@@ -9,22 +9,23 @@ class ChessArmy
 
   include ChessPieceDatabase
 
-  def initialize(color)
+  def initialize(color, board)
     @color = color
-    @full_set = create_full_set(@color, chess_piece_database)
+    @board = board
+    @full_set = create_full_set(@color, chess_piece_database, @board)
   end
 
   # Takes parameter to create ChessPiece object
-  def create_chess_piece(color, typ, attributes)
-    ChessPiece.new(color, typ, attributes)
+  def create_chess_piece(color, typ, attributes, board)
+    ChessPiece.new(color, typ, attributes, board)
   end
 
   # Uses database hash to built chess pieces in appropriate amount and returns full_set array
-  def create_full_set(color, piece_database)
+  def create_full_set(color, piece_database, board)
     full_set = []
     piece_database.each_pair do |type, attributes|
       attributes[:amount].times do
-        full_set << create_chess_piece(color, type, attributes)
+        full_set << create_chess_piece(color, type, attributes, board)
       end
     end
     full_set

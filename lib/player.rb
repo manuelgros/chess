@@ -12,7 +12,7 @@ class Player
     @color = color
     @name = ask_player_name
     @board = board
-    @army = ChessArmy.new(color)
+    @army = ChessArmy.new(@color, @board)
   end
 
   def ask_player_name
