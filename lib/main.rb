@@ -8,5 +8,5 @@ require_relative '../lib/game'
 # Run code her
 game = Game.new
 game.setup_board
-puts game.board[7][0].type
-puts game.board[0][0].type
+puts "#{game.board[7][0].color} #{game.board[7][0].type}"
+puts "#{game.board[0][0].color} #{game.board[0][0].type}"
