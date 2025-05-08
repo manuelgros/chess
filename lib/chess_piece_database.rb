@@ -8,7 +8,9 @@ module ChessPieceDatabase
       pawn: {
         typ: :pawn,
         amount: 8,
-        moves: [[1, 0], [1, 1], [1, -1]],
+        # [1, 1], [1, -1] when beating other pieces
+        # Pawn has many special movements that will have to be added later
+        moves: [[1, 0]],
         range: 1
       },
       rook: {
