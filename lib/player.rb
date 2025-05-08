@@ -23,7 +23,7 @@ class Player
   def select_piece
     print player_messages(:get_selection)
     selection = gets.chomp.digits
-    if validate_coordinate_input(selection) && !@board.squares[selection[0]][selection[1]].nil?
+    if validate_coordinate_input(selection) && !@board.select_square(selection).nil?
       selection
     else
       puts game_messages(:input_error)

@@ -36,7 +36,7 @@ class ChessPiece
       ]
       full_range << current_position if @board.includes_coordinates?(current_position)
 
-      break unless board.squares[current_position[0]][current_position[1]].nil?
+      break unless board.select_square(current_position).nil?
     end
     full_range
   end
