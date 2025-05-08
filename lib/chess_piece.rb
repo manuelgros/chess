@@ -20,10 +20,11 @@ class ChessPiece
     nil
   end
 
-  # Needs ADJUSTMENT after transfer to this class!
-  def move_piece(select_arr, dest_arr)
-    @board.squares[dest_arr[0]][dest_arr[1]] = @board.squares[select_arr[0]][select_arr[1]]
-    @board.squares[select_arr[0]][select_arr[1]] = nil
+  # Takes array as parameter to determine destination on board array of ChessBoard
+  def move_piece(destination)
+    current_position = find_position
+    @board.squares[destination[0]][destination[1]] = @board.squares[current_position[0]][current_position[1]]
+    @board.squares[current_position[0]][current_position[1]] = nil
   end
 
   # Takes a direction as array (exp. [1, 0] = one square up) and calculates the full range by returning
