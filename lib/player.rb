@@ -23,7 +23,7 @@ class Player
   def select_piece
     print player_messages(:get_selection)
     selection = gets.chomp.digits
-    if validate_coordinate_input(selection) && !@board[selection[0]][selection[1]].nil?
+    if validate_coordinate_input(selection) && !@board.squares[selection[0]][selection[1]].nil?
       selection
     else
       puts game_messages(:input_error)
@@ -45,7 +45,7 @@ class Player
     # returns array with sorted pieces; major rank is idex 0 to 7, pawns 8 to 16
     sorted_army = @army.sort_ranks_for_start
     starting_rows = @color.eql?(:white) ? [0, 1] : [7, 6] # decides side of board depending on color
-    @board[starting_rows[0]] = sorted_army[0..7] # major rank (root, knight etc.)
-    @board[starting_rows[1]] = sorted_army[8..15] # pawn rank
+    @board.squares[starting_rows[0]] = sorted_army[0..7] # major rank (root, knight etc.)
+    @board.squares[starting_rows[1]] = sorted_army[8..15] # pawn rank
   end
 end

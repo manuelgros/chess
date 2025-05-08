@@ -11,7 +11,7 @@ class Game
   attr_reader :board, :player_one, :player_two, :current_player
 
   def initialize
-    @board = Array.new(8) { Array.new(8) }
+    @board = ChessBoard.new
     @player_one = Player.new(:white, @board)
     @player_two = Player.new(:black, @board)
     @current_player = @player_one
