@@ -12,7 +12,7 @@ class ChessPiece
     @board = board
   end
 
-  def find_position
+  def position
     @board.squares.each_with_index do |row, y_coord|
       x_coord = row.index(self)
       return [y_coord, x_coord] if x_coord
@@ -20,16 +20,16 @@ class ChessPiece
     nil
   end
 
-  # Takes array as parameter to determine destination on board array of ChessBoard
-  def move_piece(destination)
-    current_position = find_position
+  # Takes array with coordinates. Determines destination on board array of ChessBoard
+  def move(destination)
+    current_position = position
     @board.squares[destination[0]][destination[1]] = @board.squares[current_position[0]][current_position[1]]
     @board.squares[current_position[0]][current_position[1]] = nil
   end
 
   # Takes a direction as array (exp. [1, 0] = one square up) and calculates the full range by returning
   # array with all valid fields that could be selected for the destination for certain piece
-  def calc_range(current_position, direction)
+  def reach(current_position, direction)
     full_range = []
     @range.times do
       current_position = [
@@ -42,11 +42,11 @@ class ChessPiece
     full_range
   end
 
-  # Takes all directions arrays from @movement and calls calc_range for each
-  def find_paths
-    current_position = find_position
+  # Takes all directions arrays from @movement and calls range for each
+  def direction
+    current_position = position
     @movement.each_with_object([]) do |direction, valid_moves|
-      valid_moves << calc_range(current_position, direction)
+      valid_moves << reach(current_position, direction)
       valid_moves.flatten!(1)
     end
   end
