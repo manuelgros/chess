@@ -10,6 +10,7 @@ module ChessPieceDatabase
         amount: 8,
         # [1, 1], [1, -1] when beating other pieces
         # Pawn has many special movements that will have to be added later
+        # Also need consideration which side since he only moves in one direction
         moves: [[1, 0]],
         range: 1
       },
