@@ -13,7 +13,9 @@ class ChessBoard
   end
 
   def includes_coordinates?(coord)
-    return true if @squares[coord[0]].size >= coord[1]
+    x_coord = coord[0]
+    y_coord = coord[1]
+    return true if x_coord.between?(0, 7) && y_coord.between?(0, 7)
 
     false
   end
