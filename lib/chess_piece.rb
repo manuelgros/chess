@@ -35,9 +35,9 @@ class ChessPiece
     @range.times do
       next_square = start.zip(direction).map { |coord, movement| coord + movement }
       reachable << next_square if @board.includes_coordinates?(next_square)
-      start = next_square
+      break unless board.select_square(next_square).nil?
 
-      # break unless board.select_square(current_position).nil?
+      start = next_square
     end
     reachable
   end
