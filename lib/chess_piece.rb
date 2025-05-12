@@ -30,24 +30,23 @@ class ChessPiece
   # Takes a direction as array (exp. [1, 0] = one square up) and calculates the full range by returning
   # array with all valid fields that could be selected for the destination for certain piece
   def reach(current_position, direction)
-    full_range = []
+    reachable = []
+    start = current_position
     @range.times do
-      current_position = [
-        (current_position[0] + direction[0]), (current_position[1] + direction[1])
-      ]
-      full_range << current_position if @board.includes_coordinates?(current_position)
+      next_square = start.zip(direction).map { |coord, movement| coord + movement }
+      reachable << next_square if @board.includes_coordinates?(next_square)
+      start = next_square
 
-      break unless board.select_square(current_position).nil?
+      # break unless board.select_square(current_position).nil?
     end
-    full_range
+    reachable
   end
 
   # Takes all directions arrays from @movement and calls range for each
-  def direction
+  def valid_moves
     current_position = position
     @movement.each_with_object([]) do |direction, valid_moves|
-      valid_moves << reach(current_position, direction)
-      valid_moves.flatten!(1)
+      valid_moves.concat(reach(current_position, direction))
     end
   end
 end
