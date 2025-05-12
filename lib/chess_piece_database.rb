@@ -3,6 +3,8 @@
 # PieceDatabase Module; stores information to create the various chess pieces
 module ChessPieceDatabase
   # Returns hash storing attributes for each Chess Piece; calling patter: pice_database[:piece_typ][:attribute]
+  # :moves is array with the direction the pieces can travel ([1, 0] => one up)
+  # :range decides how far a piece can go (7 = can potentially cross the entire board)
   def chess_piece_database # rubocop:disable Metrics/MethodLength
     {
       pawn: {
