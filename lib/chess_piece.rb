@@ -4,11 +4,11 @@
 class ChessPiece
   attr_reader :color, :type, :movement, :range, :board
 
-  def initialize(color, type, hash, board)
+  def initialize(color, type, movement, range, board)
     @color = color
     @type = type
-    @movement = hash[:moves]
-    @range = hash[:range]
+    @movement = movement
+    @range = range
     @board = board
   end
 
