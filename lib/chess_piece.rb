@@ -36,10 +36,16 @@ class ChessPiece
     start = current_position
     @range.times do
       next_square = start.zip(direction).map { |coord, movement| coord + movement }
-      break if board.select_square(next_square).color == @color
+      break if next_square.any?(&:negative?) # prevent negative index selection in array
 
-      reachable << next_square if @board.includes_coordinates?(next_square)
-      break unless board.select_square(next_square).nil?
+      if board.select_square(next_square).nil? && @board.includes_coordinates?(next_square)
+        reachable << next_square
+        start = next_square
+      else
+        reachable << next_square if board.select_square(next_square).color != @color
+
+        break
+      end
     end
     reachable
   end
