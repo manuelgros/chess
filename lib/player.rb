@@ -27,7 +27,7 @@ class Player
     if validate_coordinate_input(selection) && !@board.select_square(selection).nil?
       selection
     else
-      puts player_messages(:input_error)
+      puts player_messages(:coord_input_error) # confusing, need better messages for different scenarios
       select_piece
     end
   end
