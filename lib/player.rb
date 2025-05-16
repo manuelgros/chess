@@ -22,21 +22,22 @@ class Player
 
   def select_piece
     print player_messages(:get_selection)
-    selection = gets.chomp.digits
+    selection = gets.chomp.chars.map(&:to_i)
+    puts selection
     if validate_coordinate_input(selection) && !@board.select_square(selection).nil?
       selection
     else
-      puts game_messages(:input_error)
+      puts player_messages(:input_error)
       select_piece
     end
   end
 
   def select_destination
     print player_messages(:get_destination)
-    selection = gets.chomp.digits
+    selection = gets.chomp.chars.map(&:to_i)
     return selection if validate_coordinate_input(selection)
 
-    puts game_messages(:coord_input_error)
+    puts player_messages(:coord_input_error)
     select_destination
   end
 
