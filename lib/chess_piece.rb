@@ -20,29 +20,31 @@ class ChessPiece
     nil
   end
 
-  # Takes array with coordinates. Determines destination on board array of ChessBoard
+  # Takes coordinate array ([3, 5] = board[3][5]). It transfers ChessPiece object from current position to
+  # destination
   def move(destination)
-    current_position = position
+    current_position = position # method to find own position
     @board.squares[destination[0]][destination[1]] = @board.squares[current_position[0]][current_position[1]]
     @board.squares[current_position[0]][current_position[1]] = nil
   end
 
-  # Takes a direction as array (exp. [1, 0] = one square up) and calculates the full range by returning
-  # array with all valid fields that could be selected for the destination for certain piece
+  # takes direction array (exp [1, 0] = up) and collects all coordinates in range from current position of piece
+  # returns array with all valid coordinates in a single direction.
+  # Loop breaks BEFORE adding coordinate if field is used by friendly piece and AFTER if enemy
   def reach(current_position, direction)
     reachable = []
     start = current_position
     @range.times do
       next_square = start.zip(direction).map { |coord, movement| coord + movement }
+      break if board.select_square(next_square).color == @color
+
       reachable << next_square if @board.includes_coordinates?(next_square)
       break unless board.select_square(next_square).nil?
-
-      start = next_square
     end
     reachable
   end
 
-  # Takes all directions arrays from @movement and calls range for each
+  # Takes all directions arrays from @movement and calls range for each. Returns array with all valid coordinates
   def valid_moves
     current_position = position
     @movement.each_with_object([]) do |direction, valid_moves|
