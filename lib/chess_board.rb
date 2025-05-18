@@ -12,6 +12,15 @@ class ChessBoard
     Array.new(8) { Array.new(8) }
   end
 
+  def setup_ranks(player)
+    # sort_ranks_for_start brings army array into right order
+    # returns array with sorted pieces; major rank is idex 0 to 7, pawns 8 to 16
+    sorted_army = player.sort_ranks_for_start
+    starting_rows = player.color.eql?(:white) ? [0, 1] : [7, 6] # decides side of board depending on color
+    @squares[starting_rows[0]] = sorted_army[0..7] # major rank (root, knight etc.)
+    @squares[starting_rows[1]] = sorted_army[8..15] # pawn rank
+  end
+
   def includes_coordinates?(coord)
     x_coord = coord[0]
     y_coord = coord[1]
