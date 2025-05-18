@@ -57,4 +57,10 @@ class ChessPiece
       valid_moves.concat(reach(current_position, direction))
     end
   end
+
+  def any_moves?
+    return false if valid_moves.empty?
+
+    true
+  end
 end
