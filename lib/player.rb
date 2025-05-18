@@ -73,13 +73,3 @@ class Player
     end
   end
 end
-
-# moved to game.rb
-# def setup_ranks
-#   # sort_ranks_for_start brings army array into right order
-#   # returns array with sorted pieces; major rank is idex 0 to 7, pawns 8 to 16
-#   sorted_army = @army.sort_ranks_for_start
-#   starting_rows = @color.eql?(:white) ? [0, 1] : [7, 6] # decides side of board depending on color
-#   @board.squares[starting_rows[0]] = sorted_army[0..7] # major rank (root, knight etc.)
-#   @board.squares[starting_rows[1]] = sorted_army[8..15] # pawn rank
-# end
