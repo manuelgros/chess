@@ -3,11 +3,11 @@
 require_relative '../lib/player'
 require_relative '../lib/chess_board'
 require_relative '../lib/messages'
-require_relative '../lib/game_logic'
 
 # Class for Game Logic
 class Game
   include Messages
+
   attr_reader :board, :player_one, :player_two, :current_player
 
   def initialize
@@ -20,7 +20,7 @@ class Game
   def setup_ranks(player)
     # sort_ranks_for_start brings army array into right order
     # returns array with sorted pieces; major rank is idex 0 to 7, pawns 8 to 16
-    sorted_army = player.army.sort_ranks_for_start
+    sorted_army = player.sort_ranks_for_start
     starting_rows = player.color.eql?(:white) ? [0, 1] : [7, 6] # decides side of board depending on color
     @board.squares[starting_rows[0]] = sorted_army[0..7] # major rank (root, knight etc.)
     @board.squares[starting_rows[1]] = sorted_army[8..15] # pawn rank
@@ -49,7 +49,7 @@ class Game
 
   def select_piece
     puts player_messages(:get_selection) # maybe more specific to select piece
-    selected_piece = @board.select_square(current_player.select_coordinates)
+    selected_piece = @board.select_square(current_player.ask_coordinates)
     return unless selected_piece.nil? || !selected_piece.any_moves?
 
     puts 'There are no moves for your selection'
@@ -58,7 +58,7 @@ class Game
 
   def select_destination
     puts player_messages(:get_destination)
-    destination = current_player.select_coordinates
+    destination = current_player.ask_coordinates
     target = @board.select_square(destination)
     return destination if target.nil? || target.color != current_player.color
 
