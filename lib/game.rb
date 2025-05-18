@@ -47,24 +47,24 @@ class Game
   #   end
   # end
 
-  def select_piece
-    puts player_messages(:get_selection) # maybe more specific to select piece
-    selected_piece = @board.select_square(current_player.ask_coordinates)
-    return unless selected_piece.nil? || !selected_piece.any_moves?
+  # def select_piece
+  #   puts player_messages(:get_selection) # maybe more specific to select piece
+  #   selected_piece = @board.select_square(current_player.ask_coordinates)
+  #   return unless selected_piece.nil? || !selected_piece.any_moves?
 
-    puts 'There are no moves for your selection'
-    select_piece
-  end
+  #   puts 'There are no moves for your selection'
+  #   select_piece
+  # end
 
-  def select_destination
-    puts player_messages(:get_destination)
-    destination = current_player.ask_coordinates
-    target = @board.select_square(destination)
-    return destination if target.nil? || target.color != current_player.color
+  # def select_destination
+  #   puts player_messages(:get_destination)
+  #   destination = current_player.ask_coordinates
+  #   target = @board.select_square(destination)
+  #   return destination if target.nil? || target.color != current_player.color
 
-    puts 'Invalid target'
-    select_destination
-  end
+  #   puts 'Invalid target'
+  #   select_destination
+  # end
 
   def full_match
     # script to run a full match until end conditions are met (win, draw, capitulation etc.)

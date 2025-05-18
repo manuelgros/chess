@@ -33,6 +33,25 @@ class Player
     end
   end
 
+  def select_piece
+    puts player_messages(:get_selection) # maybe more specific to select piece
+    selected_piece = @board.select_square(ask_coordinates)
+    return selected_piece unless selected_piece.nil? || !selected_piece.any_moves?
+
+    puts 'There are no moves for your selection'
+    select_piece
+  end
+
+  def select_destination
+    puts player_messages(:get_destination)
+    destination = ask_coordinates
+    target = @board.select_square(destination)
+    return destination if target.nil? || target.color != @color
+
+    puts 'Invalid target'
+    select_destination
+  end
+
   def create_chess_piece(color, typ, movement, range, board)
     ChessPiece.new(color, typ, movement, range, board)
   end
@@ -56,15 +75,6 @@ class Player
 end
 
 # moved to game.rb
-# def select_destination
-#   print player_messages(:get_destination)
-#   selection = gets.chomp.chars.map(&:to_i)
-#   return selection if validate_coordinate_input(selection)
-
-#   puts player_messages(:coord_input_error)
-#   select_destination
-# end
-
 # def setup_ranks
 #   # sort_ranks_for_start brings army array into right order
 #   # returns array with sorted pieces; major rank is idex 0 to 7, pawns 8 to 16
