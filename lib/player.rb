@@ -38,7 +38,7 @@ class Player
     selected_piece = @board.select_square(ask_coordinates)
     return selected_piece unless selected_piece.nil? || !selected_piece.any_moves?
 
-    puts 'There are no moves for your selection'
+    puts player_messages(:invalid_selection)
     select_piece
   end
 
@@ -46,9 +46,9 @@ class Player
     puts player_messages(:get_destination)
     destination = ask_coordinates
     target = @board.select_square(destination)
-    return destination if target.nil? || target.color != @color
+    return destination if @board.includes_coordinates?(target) && target.color != @color
 
-    puts 'Invalid target'
+    puts player_messages(:invalid_destination)
     select_destination
   end
 
