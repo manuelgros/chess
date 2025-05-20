@@ -39,7 +39,7 @@ module GameCommunication
 
   def game_messages(message)
     {
-      new_turn: "#{@current_player.name}, it is your turn.\n"
+      new_turn: "#{@current_player.name}, it is your turn.\n\n"
     }[message]
   end
 
