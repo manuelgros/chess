@@ -37,11 +37,16 @@ module Messages
     }[message]
   end
 
-  def game_messages(message)
+  def move_messages(message, piece, target)
     {
-      capture: "#{piece.color} #{piece.type} captures #{destination.color} #{destination.type}",
-      move: "#{active_piece.color} #{active_piece.type} moves to #{target[0]} #{target[1]}",
-      invalid_move: "Invalid move for #{active_piece.color} #{active_piece.type}. Please select something else."
+      move: "#{piece.color.capitalize} #{piece.type.capitalize} moves to #{target[0]} / #{target[1]}",
+      invalid_move: "Invalid move for #{piece.color.capitalize} #{piece.type.capitalize}. Please select something else."
+    }[message]
+  end
+
+  def capture_messages(message, piece, target)
+    {
+      capture: "#{piece.color.capitalize} #{piece.type.capitalize} captures #{@board.select_square(target).color.capitalize} #{@board.select_square(target).type.capitalize} on #{target[0]} / #{target[1]}"
     }[message]
   end
   # rubocop:enable Layout/LineLength
