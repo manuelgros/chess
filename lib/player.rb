@@ -26,6 +26,7 @@ class Player
   def select_piece
     puts player_messages(:get_selection)
     selected_piece = @board.select_square(ask_coordinates)
+    puts "Selected piece: #{selected_piece.color} #{selected_piece.type}" # PLACEHOLDER
     return selected_piece unless selected_piece.nil? || !selected_piece.any_moves? || selected_piece.color != @color
 
     puts player_messages(:invalid_selection)
@@ -43,8 +44,12 @@ class Player
   end
 
   # Methods to create and sort chess army
-  def create_chess_piece(color, typ, movement, range, board)
-    ChessPiece.new(color, typ, movement, range, board)
+  def create_chess_piece(color, type, movement, range, board)
+    if type == :pawn
+      Pawn.new(color, type, movement, range, board)
+    else
+      ChessPiece.new(color, type, movement, range, board)
+    end
   end
 
   def create_full_set(color, piece_database, board)
