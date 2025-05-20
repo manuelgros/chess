@@ -28,6 +28,12 @@ class ChessPiece
     @board.squares[current_position[0]][current_position[1]] = nil
   end
 
+  # Not sure if needed yet
+  def capture(other_piece)
+    opponent = current_player == player_one ? player_two : player_one
+    opponent.army.delete(other_piece)
+  end
+
   # takes direction array (exp [1, 0] = up) and collects all coordinates in range from current position of piece
   # returns array with all valid coordinates in a single direction.
   # Loop breaks BEFORE adding coordinate if field is used by friendly piece and AFTER if enemy
