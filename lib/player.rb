@@ -20,17 +20,7 @@ class Player
 
   def ask_name
     print player_messages(:get_name)
-    gets.chomp
-  end
-
-  def ask_coordinates
-    selection = gets.chomp.chars.map(&:to_i)
-    if validate_coordinate_input(selection) # && !@board.select_square(selection).nil?
-      selection
-    else
-      puts player_messages(:coord_input_error) # confusing, need better messages for different scenarios
-      select_coordinates
-    end
+    gets.chomp.capitalize
   end
 
   def select_piece
@@ -46,7 +36,7 @@ class Player
     puts player_messages(:get_destination)
     destination = ask_coordinates
     target = @board.select_square(destination)
-    return destination if @board.includes_coordinates?(target) && target.color != @color
+    return destination if target.nil? || target.color != @color
 
     puts player_messages(:invalid_destination)
     select_destination
