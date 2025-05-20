@@ -28,6 +28,7 @@ class Game
 
   def turn
     active_piece = current_player.select_piece
+    puts "Moves: #{active_piece.valid_moves}" # PLACEHOLDER
     target = current_player.select_destination
     if active_piece.valid_moves.include?(target)
       active_piece.move(target)
