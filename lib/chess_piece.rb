@@ -42,13 +42,13 @@ class ChessPiece
     start = current_position
     @range.times do
       next_square = start.zip(direction).map { |coord, movement| coord + movement }
-      break if next_square.any?(&:negative?) # prevent negative index selection in array
+      break if next_square.any?(&:negative?) || !@board.includes_coordinates?(next_square)
 
-      if board.select_square(next_square).nil? && @board.includes_coordinates?(next_square)
+      if @board.select_square(next_square).nil? # && @board.includes_coordinates?(next_square)
         reachable << next_square
         start = next_square
       else
-        reachable << next_square if board.select_square(next_square).color != @color
+        reachable << next_square if @board.select_square(next_square).color != @color
 
         break
       end
@@ -59,7 +59,7 @@ class ChessPiece
   # Takes all directions arrays from @movement and calls range for each. Returns array with all valid coordinates
   def valid_moves
     current_position = position
-    @movement.each_with_object([]) do |direction, valid_moves|
+    moves = @movement.each_with_object([]) do |direction, valid_moves|
       valid_moves.concat(reach(current_position, direction))
     end
   end
@@ -68,5 +68,16 @@ class ChessPiece
     return false if valid_moves.empty?
 
     true
+  end
+end
+
+# Subclass Pawn
+class Pawn < ChessPiece
+  def initialize(color, type, movement, range, board)
+    @color = color
+    @type = type
+    @movement = @color == :white ? movement : [[-1, 0]]
+    @range = range
+    @board = board
   end
 end
