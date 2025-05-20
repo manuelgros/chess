@@ -4,7 +4,7 @@ require_relative '../lib/player'
 require_relative '../lib/game'
 
 # Message module
-module Messages
+module GameCommunication
   # Methods for getting and validating player inputs
 
   def valid_digits?(string)

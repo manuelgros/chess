@@ -2,11 +2,11 @@
 
 require_relative '../lib/player'
 require_relative '../lib/chess_board'
-require_relative '../lib/messages'
+require_relative '../lib/game_communication'
 
 # Class for Game Logic
 class Game
-  include Messages
+  include GameCommunication
 
   attr_reader :board, :player_one, :player_two, :current_player
 

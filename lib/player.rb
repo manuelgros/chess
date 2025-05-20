@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative '../lib/messages'
+require_relative '../lib/game_communication'
 require_relative '../lib/chess_piece'
 require_relative '../lib/chess_piece_database'
 
 # Player Class
 class Player
-  include Messages
+  include GameCommunication
   include ChessPieceDatabase
 
   attr_reader :name, :color, :army
