@@ -42,6 +42,7 @@ class Player
     select_destination
   end
 
+  # Methods to create and sort chess army
   def create_chess_piece(color, typ, movement, range, board)
     ChessPiece.new(color, typ, movement, range, board)
   end
