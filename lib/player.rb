@@ -26,7 +26,7 @@ class Player
   def select_piece
     puts player_messages(:get_selection)
     selected_piece = @board.select_square(ask_coordinates)
-    return selected_piece unless selected_piece.nil? || !selected_piece.any_moves?
+    return selected_piece unless selected_piece.nil? || !selected_piece.any_moves? || selected_piece.color != @color
 
     puts player_messages(:invalid_selection)
     select_piece
