@@ -8,7 +8,7 @@ module ChessPieceDatabase
   def chess_piece_database # rubocop:disable Metrics/MethodLength
     {
       pawn: {
-        typ: :pawn,
+        # typ: :pawn,
         amount: 8,
         # [1, 1], [1, -1] when beating other pieces
         # Pawn has many special movements that will have to be added later
@@ -17,31 +17,31 @@ module ChessPieceDatabase
         range: 1
       },
       rook: {
-        typ: :pawn,
+        # typ: :rook,
         amount: 2,
         moves: [[1, 0], [-1, 0], [0, 1], [0, -1]],
         range: 7
       },
       knight: {
-        typ: :pawn,
+        # typ: :knight,
         amount: 2,
         moves: [[2, 1], [-2, -1], [1, 2], [-1, -2], [1, -2], [2, -1], [-1, 2], [-2, 1]],
         range: 1
       },
       bishop: {
-        typ: :pawn,
+        # typ: :bishop,
         amount: 2,
         moves: [[1, 1], [1, -1], [-1, 1], [-1, -1]],
         range: 7
       },
       queen: {
-        typ: :pawn,
+        # typ: :queen,
         amount: 1,
         moves: [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]],
         range: 7
       },
       king: {
-        typ: :pawn,
+        # typ: :king,
         amount: 1,
         moves: [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]],
         range: 1
