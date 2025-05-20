@@ -25,7 +25,7 @@ module ChessPieceDatabase
       knight: {
         typ: :pawn,
         amount: 2,
-        moves: [[2, 1], [2, -1], [1, 2], [1, -2]],
+        moves: [[2, 1], [-2, -1], [1, 2], [-1, -2], [1, -2], [2, -1], [-1, 2], [-2, 1]],
         range: 1
       },
       bishop: {
