@@ -37,6 +37,12 @@ module GameCommunication
     }[message]
   end
 
+  def game_messages(message)
+    {
+      new_turn: "#{@current_player.name}, it is your turn.\n"
+    }[message]
+  end
+
   def move_messages(message, piece, target)
     {
       move: "#{piece.color.capitalize} #{piece.type.capitalize} moves to #{target[0]} / #{target[1]}",
