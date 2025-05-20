@@ -6,7 +6,7 @@ require 'colorize'
 module Rendering
   SKINS = {
     rook: ' R ',
-    knight: ' K ',
+    knight: ' N ',
     bishop: ' B ',
     queen: ' Q ',
     king: ' K ',
@@ -20,9 +20,15 @@ module Rendering
   end
 
   def display_board
-    @board.squares.each_with_index do |row, row_index|
-      print "#{row_index}  ".colorize(:yellow)
-      row.each { |field| print translate(field) }
+    @board.squares.reverse.each_with_index do |row, row_index|
+      print "#{(row_index - 7).abs}  ".colorize(:yellow)
+      row.each do |field|
+        if field.nil? || field.color == :white
+          print translate(field)
+        else
+          print translate(field).colorize(:light_black)
+        end
+      end
       puts "\n"
     end
     puts '    0  1  2  3  4  5  6  7'.colorize(:yellow)
