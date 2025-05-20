@@ -8,7 +8,8 @@ require_relative '../lib/game_communication'
 class Game
   include GameCommunication
 
-  attr_reader :board, :player_one, :player_two, :current_player
+  attr_reader :board, :player_one, :player_two
+  attr_accessor :current_player
 
   def initialize
     @board = ChessBoard.new
@@ -39,5 +40,14 @@ class Game
 
   def full_match
     # script to run a full match until end conditions are met (win, draw, capitulation etc.)
+    until check_mate?
+      puts game_messages(:new_turn)
+      turn
+      @current_player = current_player == player_one ? player_two : player_one
+    end
+  end
+
+  def check_mate? # Place holder to test full_match
+    false
   end
 end
