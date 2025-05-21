@@ -4,7 +4,7 @@ require 'colorize'
 
 # Module to render the chess game for display in console
 module Rendering
-  SKINS = {
+  MARKER = {
     rook: ' R ',
     knight: ' N ',
     bishop: ' B ',
@@ -13,10 +13,32 @@ module Rendering
     pawn: ' P '
   }.freeze
 
-  def translate(item)
-    return '   ' if item.nil?
+  BLACK_SIDE = {
+    king: " \u2654 ",
+    queen: " \u2655 ",
+    rook: " \u2656 ",
+    bishop: " \u2657 ",
+    knight: " \u2658 ",
+    pawn: " \u2659 "
+  }.freeze
 
-    SKINS[item.type]
+  WHITE_SIDE = {
+    king: " \u265a ",
+    queen: " \u265b ",
+    rook: " \u265c ",
+    bishop: " \u265d ",
+    knight: " \u265e ",
+    pawn: " \u265f "
+  }.freeze
+
+  def translate(item)
+    if item.nil?
+      '   '
+    elsif item.color == :white
+      WHITE_SIDE[item.type]
+    else
+      BLACK_SIDE[item.type]
+    end
   end
 
   def display_board
