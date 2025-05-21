@@ -13,7 +13,11 @@ module ChessPieceDatabase
         # [1, 1], [1, -1] when beating other pieces
         # Pawn has many special movements that will have to be added later
         # Also need consideration which side since he only moves in one direction
-        moves: [[1, 0]],
+        moves: {
+          white: [[1, 0]],
+          black: [[-1, 0]]
+        },
+        start_range: 2,
         range: 1
       },
       rook: {
