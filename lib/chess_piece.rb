@@ -34,23 +34,33 @@ class ChessPiece
     opponent.army.delete(other_piece)
   end
 
-  # takes direction array (exp [1, 0] = up) and collects all coordinates in range from current position of piece
-  # returns array with all valid coordinates in a single direction.
-  # Loop breaks BEFORE adding coordinate if field is used by friendly piece and AFTER if enemy
-  def reach(current_position, direction)
+  # calculates new coordinate on @board from position and direction, used in reach()
+  def next_square(position, direction)
+    position.zip(direction).map { |coord, movement| coord + movement }
+  end
+
+  # takes coordinate array and validates format as well as inclusion in @board for reach()
+  def valid_coordinate?(position)
+    position.none?(&:negative?) && @board.includes_coordinates?(position)
+  end
+
+  # takes direction as array (exp. [1, 0] -> up) and calculates all reachable squares, based on position() and @range
+  def reach(direction)
     reachable = []
-    start = current_position
+    position = position()
+
     @range.times do
-      next_square = start.zip(direction).map { |coord, movement| coord + movement }
-      break if next_square.any?(&:negative?) || !@board.includes_coordinates?(next_square)
+      position = next_square(position, direction)
+      break unless valid_coordinate?(position)
 
-      if @board.select_square(next_square).nil? # && @board.includes_coordinates?(next_square)
-        reachable << next_square
-        start = next_square
+      square = @board.select_square(position)
+
+      if square.nil?
+        reachable << position
       else
-        reachable << next_square if @board.select_square(next_square).color != @color
-
+        reachable << position if square.color != @color
         break
+
       end
     end
     reachable
@@ -58,9 +68,8 @@ class ChessPiece
 
   # Takes all directions arrays from @movement and calls range for each. Returns array with all valid coordinates
   def valid_moves
-    current_position = position
-    moves = @movement.each_with_object([]) do |direction, valid_moves|
-      valid_moves.concat(reach(current_position, direction))
+    @movement.each_with_object([]) do |direction, valid_moves|
+      valid_moves.concat(reach(direction))
     end
   end
 
@@ -73,11 +82,41 @@ end
 
 # Subclass Pawn
 class Pawn < ChessPiece
+  attr_accessor :moved_yet
+  attr_reader :capture_moves
+
   def initialize(color, type, movement, range, board)
-    @color = color
-    @type = type
-    @movement = @color == :white ? movement : [[-1, 0]]
-    @range = range
-    @board = board
+    super
+    @movement = @color == :white ? movement[:white] : movement[:black]
+    @moved_yet = false
+    @capture_moves = @color.eql?(:white) ? [[1, 1], [1, -1]] : [[-1, 1], [-1, -1]]
+  end
+
+  # checks if Pawn can attack and if so, returns array with additional valid directions, to be
+  # added in valid_moves
+  def attack_moves
+    position = position()
+    @capture_moves.each_with_object([]) do |direction, extra_moves|
+      target = @board.select_square(next_square(position, direction))
+      extra_moves << direction unless target.nil? || target.color == @color
+    end
+  end
+
+  def reach(direction)
+    @range = @moved_yet ? 1 : 2
+    super(direction)
+  end
+
+  def valid_moves
+    # current_position = position
+    moves = @movement.concat(attack_moves)
+    moves.each_with_object([]) do |direction, valid_moves|
+      valid_moves.concat(reach(direction))
+    end
+  end
+
+  def move(destination)
+    super(destination)
+    @moved_yet = true if @moved_yet == false
   end
 end
