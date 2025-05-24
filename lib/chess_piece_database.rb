@@ -8,44 +8,41 @@ module ChessPieceDatabase
   def chess_piece_database # rubocop:disable Metrics/MethodLength
     {
       pawn: {
-        # typ: :pawn,
         amount: 8,
-        # [1, 1], [1, -1] when beating other pieces
-        # Pawn has many special movements that will have to be added later
-        # Also need consideration which side since he only moves in one direction
         moves: {
-          white: [[1, 0]],
-          black: [[-1, 0]]
+          white: {
+            regular: [[1, 0]],
+            capture_moves: [[1, 1], [1, -1]]
+          },
+          black: {
+            regular: [[-1, 0]],
+            capture_moves: [[-1, 1], [-1, -1]]
+          }
         },
         start_range: 2,
         range: 1
       },
       rook: {
-        # typ: :rook,
         amount: 2,
         moves: [[1, 0], [-1, 0], [0, 1], [0, -1]],
         range: 7
       },
       knight: {
-        # typ: :knight,
         amount: 2,
         moves: [[2, 1], [-2, -1], [1, 2], [-1, -2], [1, -2], [2, -1], [-1, 2], [-2, 1]],
         range: 1
       },
       bishop: {
-        # typ: :bishop,
         amount: 2,
         moves: [[1, 1], [1, -1], [-1, 1], [-1, -1]],
         range: 7
       },
       queen: {
-        # typ: :queen,
         amount: 1,
         moves: [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]],
         range: 7
       },
       king: {
-        # typ: :king,
         amount: 1,
         moves: [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]],
         range: 1
