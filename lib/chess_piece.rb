@@ -45,7 +45,7 @@ class ChessPiece
   end
 
   # takes direction as array (exp. [1, 0] -> up) and calculates all reachable squares, based on position() and @range
-  def reach(direction)
+  def reach(direction) # rubocop:disable Metrics/MethodLength
     reachable = []
     position = position()
 
@@ -87,9 +87,10 @@ class Pawn < ChessPiece
 
   def initialize(color, type, movement, range, board)
     super
-    @movement = @color == :white ? movement[:white] : movement[:black]
-    @moved_yet = false
-    @capture_moves = @color.eql?(:white) ? [[1, 1], [1, -1]] : [[-1, 1], [-1, -1]]
+    # @movement = @color == :white ? movement[:white][:regular] : movement[:black][:regular]
+    @movement = movement[@color][:regular]
+    @capture_moves = movement[@color][:capture_moves]
+    @first_move = true
   end
 
   # checks if Pawn can attack and if so, returns array with additional valid directions, to be
@@ -103,12 +104,11 @@ class Pawn < ChessPiece
   end
 
   def reach(direction)
-    @range = @moved_yet ? 1 : 2
+    @range = @first_move ? 2 : 1
     super(direction)
   end
 
   def valid_moves
-    # current_position = position
     moves = @movement.concat(attack_moves)
     moves.each_with_object([]) do |direction, valid_moves|
       valid_moves.concat(reach(direction))
@@ -117,6 +117,6 @@ class Pawn < ChessPiece
 
   def move(destination)
     super(destination)
-    @moved_yet = true if @moved_yet == false
+    @first_move = false if @first_move
   end
 end
