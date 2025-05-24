@@ -87,7 +87,6 @@ class Pawn < ChessPiece
 
   def initialize(color, type, movement, range, board)
     super
-    # @movement = @color == :white ? movement[:white][:regular] : movement[:black][:regular]
     @movement = movement[@color][:regular]
     @capture_moves = movement[@color][:capture_moves]
     @first_move = true
@@ -104,7 +103,7 @@ class Pawn < ChessPiece
   end
 
   def reach(direction)
-    @range = @first_move ? 2 : 1
+    @range = @first_move ? 2 : 1 # change to use range data from database
     super(direction)
   end
 
