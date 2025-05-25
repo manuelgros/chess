@@ -15,7 +15,7 @@ class Player
     @color = color
     @name = ask_name
     @board = board
-    @army = create_full_set(@color, chess_piece_database, @board)
+    @army = create_full_set
   end
 
   def ask_name
@@ -46,19 +46,19 @@ class Player
   end
 
   # Methods to create and sort chess army
-  def create_chess_piece(color, type, movement, range, board)
+  def create_chess_piece(type, database)
     if type == :pawn
-      Pawn.new(color, type, movement, range, board)
+      Pawn.new(@color, @board, type, database)
     else
-      ChessPiece.new(color, type, movement, range, board)
+      ChessPiece.new(@color, @board, type, database)
     end
   end
 
-  def create_full_set(color, piece_database, board)
+  def create_full_set
     full_set = []
-    piece_database.each_pair do |type, database|
+    chess_piece_database.each_pair do |type, database|
       database[:amount].times do
-        full_set << create_chess_piece(color, type, database[:moves], database[:range], board)
+        full_set << create_chess_piece(type, database)
       end
     end
     full_set

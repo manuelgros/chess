@@ -4,12 +4,12 @@
 class ChessPiece
   attr_reader :color, :type, :movement, :range, :board
 
-  def initialize(color, type, movement, range, board)
+  def initialize(color, board, type, database)
     @color = color
-    @type = type
-    @movement = movement
-    @range = range
     @board = board
+    @type = type
+    @movement = database[:moves]
+    @range = database[:range]
   end
 
   def position
@@ -82,13 +82,10 @@ end
 
 # Subclass Pawn
 class Pawn < ChessPiece
-  attr_accessor :moved_yet
-  attr_reader :capture_moves
-
-  def initialize(color, type, movement, range, board)
+  def initialize(color, board, type, database)
     super
-    @movement = movement[@color][:regular]
-    @capture_moves = movement[@color][:capture_moves]
+    @movement = database[:moves][@color][:regular]
+    @capture_moves = database[:moves][@color][:capture_moves]
     @first_move = true
   end
 
