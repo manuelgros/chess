@@ -20,7 +20,10 @@ module ChessPieceDatabase
           }
         },
         start_range: 2,
-        range: 1
+        range: {
+          regular: 1,
+          start: 2
+        }
       },
       rook: {
         amount: 2,
