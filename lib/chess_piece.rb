@@ -29,6 +29,11 @@ class ChessPiece
     field.color == enemy_color
   end
 
+  # Needed?
+  def friend?(field)
+    field.color == @color
+  end
+
   def move(destination)
     start = position
     @board.change_square(destination, self)
@@ -99,9 +104,9 @@ class Pawn < ChessPiece
   # checks if Pawn can attack and if so, returns array with additional valid directions, to be
   # added in valid_moves
   def attack_moves
-    position = position()
+    current_position = position
     @capture_moves.each_with_object([]) do |direction, extra_moves|
-      target = @board.select_square(next_square(position, direction))
+      target = @board.select_square(next_square(current_position, direction))
       extra_moves << direction if enemy?(target)
     end
   end
