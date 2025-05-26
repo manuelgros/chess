@@ -32,4 +32,8 @@ class ChessBoard
   def select_square(coord_arr)
     @squares[coord_arr[0]][coord_arr[1]]
   end
+
+  def change_square(coord, object)
+    @squares[coord[0]][coord[1]] = object
+  end
 end

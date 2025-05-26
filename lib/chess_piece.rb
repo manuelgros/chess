@@ -29,12 +29,10 @@ class ChessPiece
     field.color == enemy_color
   end
 
-  # Takes coordinate array ([3, 5] = board[3][5]). It transfers ChessPiece object from current position to
-  # destination
   def move(destination)
-    current_position = position # method to find own position
-    @board.squares[destination[0]][destination[1]] = @board.squares[current_position[0]][current_position[1]]
-    @board.squares[current_position[0]][current_position[1]] = EmptySquare.new
+    start = position
+    @board.change_square(destination, self)
+    @board.change_square(start, EmptySquare.new)
   end
 
   # Not sure if needed yet
