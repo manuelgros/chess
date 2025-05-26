@@ -20,12 +20,21 @@ class ChessPiece
     nil
   end
 
+  def empty?
+    false
+  end
+
+  def enemy?(field)
+    enemy_color = @color == :white ? :black : :white
+    field.color == enemy_color
+  end
+
   # Takes coordinate array ([3, 5] = board[3][5]). It transfers ChessPiece object from current position to
   # destination
   def move(destination)
     current_position = position # method to find own position
     @board.squares[destination[0]][destination[1]] = @board.squares[current_position[0]][current_position[1]]
-    @board.squares[current_position[0]][current_position[1]] = nil
+    @board.squares[current_position[0]][current_position[1]] = EmptySquare.new
   end
 
   # Not sure if needed yet
@@ -55,10 +64,10 @@ class ChessPiece
 
       square = @board.select_square(position)
 
-      if square.nil?
+      if square.empty?
         reachable << position
       else
-        reachable << position if square.color != @color
+        reachable << position if enemy?(square)
         break
 
       end
@@ -95,7 +104,7 @@ class Pawn < ChessPiece
     position = position()
     @capture_moves.each_with_object([]) do |direction, extra_moves|
       target = @board.select_square(next_square(position, direction))
-      extra_moves << direction unless target.nil? || target.color == @color
+      extra_moves << direction if enemy?(target)
     end
   end
 
