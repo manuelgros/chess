@@ -2,6 +2,7 @@
 
 require_relative '../lib/player'
 require_relative '../lib/chess_board'
+require_relative '../lib/empty_square'
 require_relative '../lib/game_communication'
 require_relative '../lib/rendering'
 
