@@ -2,6 +2,7 @@
 
 require_relative '../lib/game_communication'
 require_relative '../lib/chess_piece'
+# require_relative '../lib/empty_square'
 require_relative '../lib/chess_piece_database'
 
 # Player Class
@@ -26,12 +27,12 @@ class Player
   def select_piece
     puts player_messages(:get_selection)
     selected_piece = @board.select_square(ask_coordinates)
-    if selected_piece.nil? || !selected_piece.any_moves? || selected_piece.color != @color
-      puts player_messages(:invalid_selection)
-      select_piece
-    else
+    if selected_piece.any_moves? || selected_piece.color == @color
       puts "Selected piece: #{selected_piece.color} #{selected_piece.type}" # PLACEHOLDER
       selected_piece
+    else
+      puts player_messages(:invalid_selection)
+      select_piece
     end
   end
 
@@ -39,7 +40,7 @@ class Player
     puts player_messages(:get_destination)
     destination = ask_coordinates
     target = @board.select_square(destination)
-    return destination if target.nil? || target.color != @color
+    return destination unless target.color == @color
 
     puts player_messages(:invalid_destination)
     select_destination
