@@ -27,7 +27,7 @@ class Player
   def select_piece
     puts player_messages(:get_selection)
     selected_piece = @board.select_square(ask_coordinates)
-    if selected_piece.any_moves? || selected_piece.color == @color
+    if selected_piece.any_moves? && selected_piece.color == @color
       puts "Selected piece: #{selected_piece.color} #{selected_piece.type}" # PLACEHOLDER
       selected_piece
     else
