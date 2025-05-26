@@ -67,7 +67,7 @@ class ChessPiece
       if square.empty?
         reachable << position
       else
-        reachable << position if enemy?(square)
+        reachable << position if square.color != @color
         break
 
       end
