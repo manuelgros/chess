@@ -26,7 +26,6 @@ class ChessPiece
   end
 
   def enemy?
-    # field.color != @color && field.color != :none
     @color == opponent_color
   end
 
