@@ -59,25 +59,20 @@ class ChessPiece
   end
 
   # takes direction (exp. [1, 0] -> up) and returns all reachable squares, based on position() and @range
-  def reach(direction) # rubocop:disable Metrics/MethodLength
-    reachable = []
+  def reach(direction)
     position = position()
 
-    @range.times do
+    (1..@range).each_with_object([]) do |_, reachable|
       position = next_square(position, direction)
       break unless valid_coord?(position)
 
       target = @board.select_square(position)
 
-      if target.type == :empty
-        reachable << position
-      else
-        reachable << position if target.enemy?
-        break
+      next reachable << position if target.type == :empty
 
-      end
+      reachable << position if target.enemy?
+      break
     end
-    reachable
   end
 
   # returns array with all reachable squares in all possible directions
