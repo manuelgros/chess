@@ -8,4 +8,5 @@ require_relative '../lib/game'
 # Run code her
 game = Game.new
 game.setup_board
-game.full_match
+# game.full_match
+puts game.current_player.check?
