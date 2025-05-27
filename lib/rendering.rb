@@ -34,7 +34,7 @@ module Rendering
   }.freeze
 
   def translate(item)
-    if item.empty?
+    if item.type == :empty
       '   '
     elsif item.color == :white
       WHITE_SIDE[item.type]
