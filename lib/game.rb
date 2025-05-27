@@ -24,7 +24,6 @@ class Game
   def setup_board
     @board.setup_ranks(player_one)
     @board.setup_ranks(player_two)
-    puts board
   end
 
   # will need splitting up when more actions are added (save etc.)
@@ -57,14 +56,5 @@ class Game
 
   def check_mate? # Place holder to test full_match
     false
-  end
-
-  def check?
-    # opponent = current_player == @player_one ? @player_two : @player_one
-    current_player.opponent_army.each do |piece|
-      piece.valid_moves.each do |target|
-        @board.select_square(target).type == :king
-      end
-    end
   end
 end
