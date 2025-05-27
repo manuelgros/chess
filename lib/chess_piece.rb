@@ -12,6 +12,7 @@ class ChessPiece
     @range = database[:range]
   end
 
+  # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - BEGIN
   def position
     @board.squares.each_with_index do |row, y_coord|
       x_coord = row.index(self)
@@ -20,69 +21,13 @@ class ChessPiece
     nil
   end
 
-  def empty?
-    false
+  def opponent_color
+    @color == :white ? :black : :white
   end
 
-  def enemy?(field)
-    enemy_color = @color == :white ? :black : :white
-    field.color == enemy_color
-  end
-
-  # Needed?
-  def friend?(field)
-    field.color == @color
-  end
-
-  def move(destination)
-    start = position
-    @board.change_square(destination, self)
-    @board.change_square(start, EmptySquare.new)
-  end
-
-  # Not sure if needed yet
-  def capture(other_piece)
-    opponent = current_player == player_one ? player_two : player_one
-    opponent.army.delete(other_piece)
-  end
-
-  # calculates new coordinate on @board from position and direction, used in reach()
-  def next_square(position, direction)
-    position.zip(direction).map { |coord, movement| coord + movement }
-  end
-
-  # takes coordinate array and validates format as well as inclusion in @board for reach()
-  def valid_coordinate?(position)
-    position.none?(&:negative?) && @board.includes_coordinates?(position)
-  end
-
-  # takes direction as array (exp. [1, 0] -> up) and calculates all reachable squares, based on position() and @range
-  def reach(direction) # rubocop:disable Metrics/MethodLength
-    reachable = []
-    position = position()
-
-    @range.times do
-      position = next_square(position, direction)
-      break unless valid_coordinate?(position)
-
-      square = @board.select_square(position)
-
-      if square.empty?
-        reachable << position
-      else
-        reachable << position if square.color != @color
-        break
-
-      end
-    end
-    reachable
-  end
-
-  # Takes all directions arrays from @movement and calls range for each. Returns array with all valid coordinates
-  def valid_moves
-    @movement.each_with_object([]) do |direction, valid_moves|
-      valid_moves.concat(reach(direction))
-    end
+  def enemy?
+    # field.color != @color && field.color != :none
+    @color == opponent_color
   end
 
   def any_moves?
@@ -90,6 +35,59 @@ class ChessPiece
 
     true
   end
+
+  # Needed?
+  def friend?(field)
+    field.color == @color
+  end
+  # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - END
+
+  def move(destination)
+    start = position
+    @board.change_square(destination, self)
+    @board.change_square(start, EmptySquare.new)
+  end
+
+  # METHOD TO DETERMINE VALID MOVEMENTS DURING TURN - BEGIN
+  # returns next square in given direction from position
+  def next_square(position, direction)
+    position.zip(direction).map { |coord, movement| coord + movement }
+  end
+
+  # returns given coordinated if they are valid
+  def valid_coord?(coord)
+    coord.none?(&:negative?) && @board.includes_coordinates?(coord)
+  end
+
+  # takes direction (exp. [1, 0] -> up) and returns all reachable squares, based on position() and @range
+  def reach(direction) # rubocop:disable Metrics/MethodLength
+    reachable = []
+    position = position()
+
+    @range.times do
+      position = next_square(position, direction)
+      break unless valid_coord?(position)
+
+      target = @board.select_square(position)
+
+      if target.type == :empty
+        reachable << position
+      else
+        reachable << position if target.enemy?
+        break
+
+      end
+    end
+    reachable
+  end
+
+  # returns array with all reachable squares in all possible directions
+  def valid_moves
+    @movement.each_with_object([]) do |direction, valid_moves|
+      valid_moves.concat(reach(direction))
+    end
+  end
+  # METHOD TO DETERMINE VALID MOVEMENTS DURING TURN - END
 end
 
 # Subclass Pawn
@@ -101,13 +99,11 @@ class Pawn < ChessPiece
     @first_move = true
   end
 
-  # checks if Pawn can attack and if so, returns array with additional valid directions, to be
-  # added in valid_moves
+  # returns additional directions IF field is occupied by opponent piece
   def attack_moves
-    current_position = position
-    @capture_moves.each_with_object([]) do |direction, extra_moves|
-      target = @board.select_square(next_square(current_position, direction))
-      extra_moves << direction if enemy?(target)
+    @capture_moves.select do |attack_direction|
+      target = @board.select_square(next_square(position, attack_direction))
+      target.enemy?
     end
   end
 
