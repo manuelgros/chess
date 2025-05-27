@@ -27,18 +27,20 @@ class Game
     puts board
   end
 
+  # will need splitting up when more actions are added (save etc.)
   def turn
     active_piece = current_player.select_piece
-    puts "Moves: #{active_piece.valid_moves}" # PLACEHOLDER
+    puts piece_messages(:piece_moves, active_piece)
     target = current_player.select_destination
+
     if active_piece.valid_moves.include?(target)
       active_piece.move(target)
-      puts move_messages(:move, active_piece, target)
+      puts piece_messages(:move, active_piece)
       display_board
       return
     end
 
-    puts move_messages(:invalid_move, active_piece, target)
+    puts piece_messages(:invalid_move, active_piece, target)
 
     turn
   end
@@ -55,5 +57,14 @@ class Game
 
   def check_mate? # Place holder to test full_match
     false
+  end
+
+  def check?
+    # opponent = current_player == @player_one ? @player_two : @player_one
+    current_player.opponent_army.each do |piece|
+      piece.valid_moves.each do |target|
+        @board.select_square(target).type == :king
+      end
+    end
   end
 end
