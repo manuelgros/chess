@@ -16,12 +16,21 @@ class Player
     @color = color
     @name = ask_name
     @board = board
-    @army = create_full_set
+    @army = create_army
   end
 
   def ask_name
     print player_messages(:get_name)
     gets.chomp.capitalize
+  end
+
+  def opponent_color
+    @color == :white ? :black : :white
+  end
+
+  # returns array with all enemy pieces on board
+  def opponent_army
+    @board.squares.flatten.select { |piece| piece.color == opponent_color }
   end
 
   def select_piece
@@ -55,20 +64,10 @@ class Player
     end
   end
 
-  def create_full_set
-    full_set = []
-    chess_piece_database.each_pair do |type, database|
-      database[:amount].times do
-        full_set << create_chess_piece(type, database)
-      end
-    end
-    full_set
-  end
-
-  def sort_ranks_for_start
-    expected_order = setup_order
-    expected_order.map do |type|
-      @army.delete_at(@army.find_index { |chess_piece| chess_piece.type == type })
+  def create_army
+    army_database.each_with_object([]) do |piece_type, full_set|
+      database = chess_piece_database[piece_type]
+      full_set << create_chess_piece(piece_type, database)
     end
   end
 end
