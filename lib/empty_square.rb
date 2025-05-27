@@ -10,11 +10,11 @@ class EmptySquare
     :empty
   end
 
-  def empty?
-    true
+  def any_moves?
+    false
   end
 
-  def any_moves?
+  def enemy?
     false
   end
 end
