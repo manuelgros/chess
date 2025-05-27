@@ -14,7 +14,7 @@ class ChessPiece
 
   # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - BEGIN
   def position
-    @board.squares.each_with_index do |row, y_coord|
+    board.squares.each_with_index do |row, y_coord|
       x_coord = row.index(self)
       return [y_coord, x_coord] if x_coord
     end
@@ -22,17 +22,17 @@ class ChessPiece
   end
 
   def opponent_color
-    @color == :white ? :black : :white
+    color == :white ? :black : :white
   end
 
   def opponent_army
-    @board.squares.select do |piece|
+    board.squares.select do |piece|
       piece.color == opponent_color
     end
   end
 
   def commander
-    @board.game.player_one.color == @color ? @board.game.player_one : @board.game.player_two
+    board.game.player_one.color == color ? board.game.player_one : board.game.player_two
   end
 
   def enemy?(target)
@@ -53,37 +53,26 @@ class ChessPiece
 
   def move(destination)
     start = position
-    @board.change_square(destination, self)
-    @board.change_square(start, EmptySquare.new)
+    board.change_square(destination, self)
+    board.change_square(start, EmptySquare.new)
     destination
-  end
-
-  # METHOD TO DETERMINE VALID MOVEMENTS DURING TURN - BEGIN
-  # returns next square in given direction from position
-  def next_square(position, direction)
-    position.zip(direction).map { |coord, movement| coord + movement }
-  end
-
-  # returns given coordinated if they are valid
-  def valid_coord?(coord)
-    coord.none?(&:negative?) && @board.includes_coordinates?(coord)
   end
 
   # takes direction (exp. [1, 0] -> up) and returns all reachable squares, based on position() and @range
   def reach(direction)
-    position = position()
+    current_pos = position
     reachable = []
 
     range.times do
-      position = next_square(position, direction)
-      break unless valid_coord?(position)
+      current_pos = board.next_square(current_pos, direction)
+      break unless board.valid_coord?(current_pos)
 
-      target = @board.select_square(position)
+      target = @board.select_square(current_pos)
 
       if target.type == :empty
-        reachable << position
+        reachable << current_pos
       else
-        reachable << position if enemy?(target)
+        reachable << current_pos if enemy?(target)
         break
       end
     end
@@ -100,9 +89,9 @@ class ChessPiece
   # check if moving the piece would cause Player to be in check
   def cause_check?
     current_position = position
-    @board.change_square(current_position, EmptySquare.new)
+    board.change_square(current_position, EmptySquare.new)
     result = commander.check?
-    @board.change_square(current_position, self)
+    board.change_square(current_position, self)
     result
   end
   # METHOD TO DETERMINE VALID MOVEMENTS DURING TURN - END
@@ -113,18 +102,14 @@ class Pawn < ChessPiece
   def initialize(color, board, type, database)
     super
     @movement = database[:move_direction][@color]
-    # @movement = database[:move_direction][@color][:move]
-    # @capture = database[:move_direction][@color][:capture]
-    @first_move = true
-    @range = database[:range]
   end
 
   # returns additional directions IF field is occupied by opponent piece
   # BUG array contains same coord multiple times, and it seem to grow the more capture moves a Pawn takes
   def attack_moves(direction)
     direction.select do |attack_direction|
-      target_coord = next_square(position, attack_direction)
-      next unless valid_coord?(target_coord)
+      target_coord = board.next_square(position, attack_direction)
+      next unless board.valid_coord?(target_coord)
 
       target = @board.select_square(target_coord)
       enemy?(target)
@@ -132,16 +117,16 @@ class Pawn < ChessPiece
   end
 
   def range
-    @first_move ? @range[:start] : @range[:regular]
+    first_move? ? @range[:start] : @range[:regular]
   end
 
   def movement
     @movement[:move].concat(attack_moves(@movement[:capture]))
   end
 
-  def move(destination)
-    super(destination)
-    @first_move = false if @first_move
+  def first_move?
+    start_row = color == :white ? 1 : 6
+    position[0] == start_row
   end
 end
 
