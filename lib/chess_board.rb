@@ -2,9 +2,10 @@
 
 # Chess_board class
 class ChessBoard
-  attr_reader :squares
+  attr_reader :squares, :game
 
-  def initialize
+  def initialize(game)
+    @game = game
     @squares = create_square_array
     @start_row = {
       white: [0, 1],
