@@ -65,7 +65,7 @@ class ChessPiece
 
     range.times do
       current_pos = board.next_square(current_pos, direction)
-      break unless board.valid_coord?(current_pos)
+      break unless board.includes_coordinates?(current_pos)
 
       target = @board.select_square(current_pos)
 
@@ -109,7 +109,7 @@ class Pawn < ChessPiece
   def attack_moves(direction)
     direction.select do |attack_direction|
       target_coord = board.next_square(position, attack_direction)
-      next unless board.valid_coord?(target_coord)
+      next unless board.includes_coordinates?(target_coord)
 
       target = @board.select_square(target_coord)
       enemy?(target)
