@@ -102,7 +102,10 @@ class Pawn < ChessPiece
   # returns additional directions IF field is occupied by opponent piece
   def attack_moves
     @capture_moves.select do |attack_direction|
-      target = @board.select_square(next_square(position, attack_direction))
+      target_coord = next_square(position, attack_direction)
+      next unless valid_coord?(target_coord)
+
+      target = @board.select_square(target_coord)
       target.enemy?
     end
   end
