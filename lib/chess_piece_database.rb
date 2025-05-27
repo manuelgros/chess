@@ -53,15 +53,7 @@ module ChessPieceDatabase
     }
   end
 
-  def pawn_rank_order
-    Array.new(8, :pawn)
-  end
-
-  def major_rank_order
-    %i[rook knight bishop queen king bishop knight rook]
-  end
-
-  def setup_order
-    major_rank_order + pawn_rank_order
+  def army_database
+    %i[rook knight bishop queen king bishop knight rook pawn pawn pawn pawn pawn pawn pawn pawn]
   end
 end
