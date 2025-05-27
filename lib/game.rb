@@ -15,7 +15,7 @@ class Game
   attr_accessor :current_player
 
   def initialize
-    @board = ChessBoard.new
+    @board = ChessBoard.new(self)
     @player_one = Player.new(:white, @board)
     @player_two = Player.new(:black, @board)
     @current_player = @player_one
