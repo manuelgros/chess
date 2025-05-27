@@ -33,6 +33,15 @@ class Player
     @board.squares.flatten.select { |piece| piece.color == opponent_color }
   end
 
+  def check?
+    king = army.find { |piece| piece.type == :king }
+    opponent_army.each do |piece|
+      return true if piece.valid_moves.include?(king.position)
+    end
+
+    false
+  end
+
   def select_piece
     puts player_messages(:get_selection)
     selected_piece = @board.select_square(ask_coordinates)
