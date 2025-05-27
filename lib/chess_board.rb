@@ -26,11 +26,7 @@ class ChessBoard
   end
 
   def includes_coordinates?(coord)
-    x_coord = coord[0]
-    y_coord = coord[1]
-    return true if x_coord.between?(0, 7) && y_coord.between?(0, 7)
-
-    false
+    true if coord.none?(&:negative?) && coord.all? { |num| num.between?(0, 7) }
   end
 
   def select_square(coord_arr)
@@ -39,5 +35,9 @@ class ChessBoard
 
   def change_square(coord, object)
     @squares[coord[0]][coord[1]] = object
+  end
+
+  def next_square(current_pos, direction)
+    current_pos.zip(direction).map { |coord, movement| coord + movement }
   end
 end
