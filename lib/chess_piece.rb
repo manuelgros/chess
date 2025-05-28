@@ -25,10 +25,8 @@ class ChessPiece
     color == :white ? :black : :white
   end
 
-  def opponent_army
-    board.squares.select do |piece|
-      piece.color == opponent_color
-    end
+  def opponent
+    board.side[opponent_color]
   end
 
   def commander
@@ -87,11 +85,25 @@ class ChessPiece
   end
 
   # check if moving the piece would cause Player to be in check
-  def cause_check?
-    current_position = position
-    board.change_square(current_position, EmptySquare.new)
-    result = commander.check?
-    board.change_square(current_position, self)
+  # def cause_check?
+  #   current_position = position
+  #   board.change_square(current_position, EmptySquare.new)
+  #   result = commander.check?
+  #   board.change_square(current_position, self)
+  #   result
+  # end
+
+  def king
+    commander.army.find { |piece| piece.type == :king }
+  end
+
+  def cause_check?(coord)
+    start = position
+    target = board.select_square(coord)
+    move(coord)
+    result = king.check?
+    move(start)
+    board.change_square(coord, target)
     result
   end
   # METHOD TO DETERMINE VALID MOVEMENTS DURING TURN - END
@@ -115,50 +127,48 @@ class Pawn < ChessPiece
   # adjusted getter methods - END
 
   # returns array with coordinated if target is enemy
-  def attack_moves(direction)
-    direction.select do |attack_direction|
-      target_coord = board.next_square(position, attack_direction)
-      next unless board.includes_coordinates?(target_coord)
+  def attack_moves(attack_direction)
+    attack_direction.select do |direction|
+      destination = board.next_square(position, direction)
+      next unless board.includes_coordinates?(destination)
 
-      target = @board.select_square(target_coord)
+      target = @board.select_square(destination)
       enemy?(target)
     end
   end
 end
 
 # King class
-class King
+class King < ChessPiece
   # returns arrays with all coordinates that are in reach of enemy pieces
-  def danger_zone
-    opponent_army.each_with_object([]) do |piece, danger_zone|
-      danger_zone.concat(piece.valid_moves)
+  # def danger_zone
+  #   opponent.army.each_with_object([]) do |piece, danger_zone|
+  #     danger_zone.concat(piece.valid_moves)
+  #   end
+  # end
+
+  # def check?
+  #   current_pos = position
+  #   danger_zone.include?(current_pos)
+  # end
+
+  def check?
+    opponent.army.each do |piece|
+      return true if piece.valid_moves.include?(king.position)
     end
+
+    false
   end
 
-  # Option A
-  def reach(direction)
-    position = position()
-
-    (1..@range).each_with_object([]) do |_, reachable|
-      position = next_square(position, direction)
-      break unless valid_coord?(position)
-
-      target = @board.select_square(position)
-
-      next reachable << position if target.type == :empty && !danger_zone.include?(target)
-
-      reachable << position if target.enemy?
-      break
-    end
+  def check_mate?
+    check? && !any_moves
   end
 
-  # adjusted reach(), deletes all coordinates that outs king into check
-  # Option B
-  def x_reach
-    super
-    danger_zone.each do |coord|
-      reachable.delete(coord)
-    end
-    reachable
-  end
+  # def reach(direction)
+  #   super(direction).reject { |coord| danger_zone.include?(coord) }
+  # end
+
+  # def valid_moves
+  #   super.reject { |coord| danger_zone.include?(coord) }
+  # end
 end

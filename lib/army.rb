@@ -66,6 +66,8 @@ class Army
   def create_chess_piece(type, database)
     if type == :pawn
       Pawn.new(@color, @board, type, database)
+    elsif type == :king
+      King.new(@color, @board, type, database)
     else
       ChessPiece.new(@color, @board, type, database)
     end
