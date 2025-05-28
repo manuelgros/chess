@@ -11,19 +11,19 @@ class Game
   include GameCommunication
   include Rendering
 
-  attr_reader :board, :player_one, :player_two
+  attr_reader :board, :white_player, :black_player
   attr_accessor :current_player
 
   def initialize
-    @board = ChessBoard.new(self)
-    @player_one = Player.new(:white, @board)
-    @player_two = Player.new(:black, @board)
-    @current_player = @player_one
+    @board = ChessBoard.new
+    @white_player = board.white_army
+    @black_player = board.black_army
+    @current_player = @white_player
   end
 
   def setup_board
-    @board.setup_ranks(player_one)
-    @board.setup_ranks(player_two)
+    @board.setup_ranks(white_player)
+    @board.setup_ranks(black_player)
   end
 
   # will need splitting up when more actions are added (save etc.)
@@ -50,7 +50,7 @@ class Game
     until check_mate?
       puts game_messages(:new_turn)
       turn
-      @current_player = current_player == player_one ? player_two : player_one
+      @current_player = current_player == white_player ? black_player : white_player
     end
   end
 
