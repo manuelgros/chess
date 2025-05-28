@@ -99,6 +99,7 @@ end
 
 # Subclass Pawn
 class Pawn < ChessPiece
+  # adjusted getter methods - BEGIN
   def range
     first_move? ? @range[:start] : @range[:regular]
   end
@@ -111,6 +112,7 @@ class Pawn < ChessPiece
     start_row = color == :white ? 1 : 6
     position[0] == start_row
   end
+  # adjusted getter methods - END
 
   # returns array with coordinated if target is enemy
   def attack_moves(direction)
