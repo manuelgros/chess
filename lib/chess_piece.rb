@@ -32,7 +32,7 @@ class ChessPiece
   end
 
   def commander
-    board.game.player_one.color == color ? board.game.player_one : board.game.player_two
+    board.side[color]
   end
 
   def enemy?(target)
