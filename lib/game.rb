@@ -21,11 +21,6 @@ class Game
     @current_player = @white_army
   end
 
-  # def setup_board
-  #   @board.setup_ranks(white_army)
-  #   @board.setup_ranks(black_army)
-  # end
-
   # will need splitting up when more actions are added (save etc.)
   def turn
     active_piece = current_player.select_piece
