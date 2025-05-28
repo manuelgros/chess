@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/player'
+require_relative '../lib/army'
 require_relative '../lib/game'
 
 # Message module
