@@ -2,24 +2,23 @@
 
 require_relative '../lib/game_communication'
 require_relative '../lib/chess_piece'
-# require_relative '../lib/empty_square'
 require_relative '../lib/chess_piece_database'
 
 # Player Class
-class Player
+class Army
   include GameCommunication
   include ChessPieceDatabase
 
-  attr_reader :name, :color, :army
+  attr_reader :player_name, :color, :army
 
   def initialize(color, board)
     @color = color
-    @name = ask_name
+    @player_name = ask_player_name
     @board = board
     @army = create_army
   end
 
-  def ask_name
+  def ask_player_name
     print player_messages(:get_name)
     gets.chomp.capitalize
   end

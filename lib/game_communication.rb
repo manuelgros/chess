@@ -28,8 +28,8 @@ module GameCommunication
   # rubocop:disable Layout/LineLength
   def player_messages(message)
     {
-      get_name: "Type in name for #{@color} Player: ",
-      get_selection: "#{@name} select chess piece by coordinates: ",
+      get_name: "Type in name for #{color} Player: ",
+      get_selection: "#{player_name} select chess piece by coordinates: ",
       get_destination: 'Select target for move by: ',
       coord_input_error: 'Invalid input. Please type coordinates on the X and Y axis between 0 and 7 (example: 24)',
       invalid_destination: 'The target you selected is invalid. Please select a different square on the board',
@@ -39,7 +39,7 @@ module GameCommunication
 
   def game_messages(message)
     {
-      new_turn: "#{@current_player.name}, it is your turn.\n\n"
+      new_turn: "#{@current_player.player_name}, it is your turn.\n\n"
     }[message]
   end
 

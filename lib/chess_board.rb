@@ -7,8 +7,8 @@ class ChessBoard
   def initialize
     @squares = create_square_array
     @side = {
-      white: Player.new(:white, self),
-      black: Player.new(:black, self)
+      white: Army.new(:white, self),
+      black: Army.new(:black, self)
     }
     @start_row = {
       white: [0, 1],

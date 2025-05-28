@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/player'
+require_relative '../lib/army'
 require_relative '../lib/chess_board'
 require_relative '../lib/empty_square'
 require_relative '../lib/game_communication'
@@ -11,19 +11,19 @@ class Game
   include GameCommunication
   include Rendering
 
-  attr_reader :board, :white_player, :black_player
+  attr_reader :board, :white_army, :black_army
   attr_accessor :current_player
 
   def initialize
     @board = ChessBoard.new
-    @white_player = board.side[:white]
-    @black_player = board.side[:black]
-    @current_player = @white_player
+    @white_army = board.side[:white]
+    @black_army = board.side[:black]
+    @current_player = @white_army
   end
 
   # def setup_board
-  #   @board.setup_ranks(white_player)
-  #   @board.setup_ranks(black_player)
+  #   @board.setup_ranks(white_army)
+  #   @board.setup_ranks(black_army)
   # end
 
   # will need splitting up when more actions are added (save etc.)
@@ -45,7 +45,7 @@ class Game
   end
 
   def change_current_player
-    @current_player = current_player == white_player ? black_player : white_player
+    @current_player = current_player == white_army ? black_army : white_army
   end
 
   def full_match
