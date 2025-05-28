@@ -124,6 +124,7 @@ class Pawn < ChessPiece
       enemy?(target)
     end
   end
+end
 
 # King class
 class King
