@@ -5,27 +5,25 @@ require_relative '../lib/game'
 
 # Message module
 module GameCommunication
-  # Methods for getting and validating player inputs
-
+  # INPUT METHODS
   def valid_digits?(string)
     string.match?(/\A[0-7]+\z/)
   end
 
-  def validate_coordinate_input(input_arr)
+  def validate_coordinate_input?(input_arr)
     input_arr.size == 2 && input_arr.all?(&method(:valid_digits?))
   end
 
   def ask_coordinates
     selection = gets.chomp.chars
-    return selection.map(&:to_i) if validate_coordinate_input(selection)
+    return selection.map(&:to_i) if validate_coordinate_input?(selection)
 
     puts player_messages(:coord_input_error)
     ask_coordinates
   end
 
-  # Methods to output various messages for the game
-
-  # rubocop:disable Layout/LineLength
+  # OUTPUT METHODS
+  # rubocop:disable Layout/LineLength, Metrics/AbcSize
   def player_messages(message)
     {
       get_name: "Type in name for #{color} Player: ",
@@ -37,12 +35,6 @@ module GameCommunication
     }[message]
   end
 
-  def game_messages(message)
-    {
-      new_turn: "#{@current_player.player_name}, it is your turn.\n\n"
-    }[message]
-  end
-
   def piece_messages(message, piece)
     {
       piece_moves: "Selected piece: #{(piece.color.to_s.capitalize + piece.type.to_s.capitalize).green}\nMoves: #{piece.valid_moves.to_s.green}",
@@ -51,10 +43,16 @@ module GameCommunication
     }[message]
   end
 
+  def game_messages(message)
+    {
+      new_turn: "#{@current_player.player_name}, it is your turn.\n\n"
+    }[message]
+  end
+
   def capture_messages(message, piece, target)
     {
       capture: "#{piece.color.capitalize} #{piece.type.capitalize} captures #{@board.select_square(target).color.capitalize} #{@board.select_square(target).type.capitalize} on #{target[0]} / #{target[1]}"
     }[message]
   end
-  # rubocop:enable Layout/LineLength
+  # rubocop:enable Layout/LineLength, Metrics/AbcSize
 end
