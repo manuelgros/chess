@@ -21,10 +21,10 @@ class Game
     @current_player = @white_player
   end
 
-  def setup_board
-    @board.setup_ranks(white_player)
-    @board.setup_ranks(black_player)
-  end
+  # def setup_board
+  #   @board.setup_ranks(white_player)
+  #   @board.setup_ranks(black_player)
+  # end
 
   # will need splitting up when more actions are added (save etc.)
   def turn
@@ -44,13 +44,17 @@ class Game
     turn
   end
 
+  def change_current_player
+    @current_player = current_player == white_player ? black_player : white_player
+  end
+
   def full_match
     # script to run a full match until end conditions are met (win, draw, capitulation etc.)
     display_board
     until check_mate?
       puts game_messages(:new_turn)
       turn
-      @current_player = current_player == white_player ? black_player : white_player
+      change_current_player
     end
   end
 
