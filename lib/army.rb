@@ -3,6 +3,8 @@
 require_relative '../lib/game_communication'
 require_relative '../lib/chess_piece'
 require_relative '../lib/chess_piece_database'
+require_relative '../lib/pawn'
+require_relative '../lib/king'
 
 # Player Class
 class Army
