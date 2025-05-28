@@ -2,12 +2,14 @@
 
 # Chess_board class
 class ChessBoard
-  attr_reader :squares, :white_army, :black_army
+  attr_reader :squares, :side
 
   def initialize
     @squares = create_square_array
-    @white_army = Player.new(:white, self)
-    @black_army = Player.new(:black, self)
+    @side = {
+      white: Player.new(:white, self),
+      black: Player.new(:black, self)
+    }
     @start_row = {
       white: [0, 1],
       black: [7, 6]

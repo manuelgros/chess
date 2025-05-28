@@ -16,8 +16,8 @@ class Game
 
   def initialize
     @board = ChessBoard.new
-    @white_player = board.white_army
-    @black_player = board.black_army
+    @white_player = board.side[:white]
+    @black_player = board.side[:black]
     @current_player = @white_player
   end
 
