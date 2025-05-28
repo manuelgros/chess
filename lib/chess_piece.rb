@@ -13,6 +13,7 @@ class ChessPiece
   end
 
   # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - BEGIN
+  # -------------------------------------------------------
   def position
     board.squares.each_with_index do |row, y_coord|
       x_coord = row.index(self)
@@ -47,8 +48,11 @@ class ChessPiece
   def friend?(field)
     field.color == @color
   end
+  # ------------------------------------------------------
   # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - END
 
+  # METHODS FOR FINDING VALID MOVES - BEGIN
+  # ------------------------------------------------------
   def move(destination)
     start = position
     board.change_square(destination, self)
@@ -83,6 +87,15 @@ class ChessPiece
       valid_moves.concat(reach(direction))
     end
   end
+  # -----------------------------------------------------
+  # METHODS FOR FINDING VALID MOVES - BEGIN
+
+  # METHODS TO DEAL WITH CHECK? - NO FUNCTIONAL YET - BEGIN
+  # --------------------------------------------------------
+  def save_moves
+    moves = valid_moves
+    moves.reject { |coord| cause_check?(coord) }
+  end
 
   # check if moving the piece would cause Player to be in check
   # def cause_check?
@@ -106,69 +119,6 @@ class ChessPiece
     board.change_square(coord, target)
     result
   end
-  # METHOD TO DETERMINE VALID MOVEMENTS DURING TURN - END
 end
-
-# Subclass Pawn
-class Pawn < ChessPiece
-  # adjusted getter methods - BEGIN
-  def range
-    first_move? ? @range[:start] : @range[:regular]
-  end
-
-  def movement
-    @movement[color][:move].concat(attack_moves(@movement[color][:capture]))
-  end
-
-  def first_move?
-    start_row = color == :white ? 1 : 6
-    position[0] == start_row
-  end
-  # adjusted getter methods - END
-
-  # returns array with coordinated if target is enemy
-  def attack_moves(attack_direction)
-    attack_direction.select do |direction|
-      destination = board.next_square(position, direction)
-      next unless board.includes_coordinates?(destination)
-
-      target = @board.select_square(destination)
-      enemy?(target)
-    end
-  end
-end
-
-# King class
-class King < ChessPiece
-  # returns arrays with all coordinates that are in reach of enemy pieces
-  # def danger_zone
-  #   opponent.army.each_with_object([]) do |piece, danger_zone|
-  #     danger_zone.concat(piece.valid_moves)
-  #   end
-  # end
-
-  # def check?
-  #   current_pos = position
-  #   danger_zone.include?(current_pos)
-  # end
-
-  def check?
-    opponent.army.each do |piece|
-      return true if piece.valid_moves.include?(king.position)
-    end
-
-    false
-  end
-
-  def check_mate?
-    check? && !any_moves
-  end
-
-  # def reach(direction)
-  #   super(direction).reject { |coord| danger_zone.include?(coord) }
-  # end
-
-  # def valid_moves
-  #   super.reject { |coord| danger_zone.include?(coord) }
-  # end
-end
+# --------------------------------------------------------
+# METHODS TO DEAL WITH CHECK? - NO FUNCTIONAL YET - END
