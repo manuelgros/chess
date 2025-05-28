@@ -14,18 +14,23 @@ class ChessBoard
       white: [0, 1],
       black: [7, 6]
     }
+    setup_board
   end
 
   def create_square_array
     Array.new(8) { Array.new(8) { EmptySquare.new } }
   end
 
-  def setup_ranks(player)
+  def setup_side(color)
     # replaces starting rows in @squares with pre-sorted army array
-    army = player.army
-    start_rows = @start_row[player.color]
+    army = side[color].army
+    start_rows = @start_row[color]
     @squares[start_rows[0]] = army[0..7] # major rank
     @squares[start_rows[1]] = army[8..15] # pawn rank
+  end
+
+  def setup_board
+    side.each_key { |color| setup_side(color) }
   end
 
   def includes_coordinates?(coord)
