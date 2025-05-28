@@ -99,13 +99,20 @@ end
 
 # Subclass Pawn
 class Pawn < ChessPiece
-  def initialize(color, board, type, database)
-    super
-    @movement = database[:move_direction][@color]
+  def range
+    first_move? ? @range[:start] : @range[:regular]
   end
 
-  # returns additional directions IF field is occupied by opponent piece
-  # BUG array contains same coord multiple times, and it seem to grow the more capture moves a Pawn takes
+  def movement
+    @movement[color][:move].concat(attack_moves(@movement[color][:capture]))
+  end
+
+  def first_move?
+    start_row = color == :white ? 1 : 6
+    position[0] == start_row
+  end
+
+  # returns array with coordinated if target is enemy
   def attack_moves(direction)
     direction.select do |attack_direction|
       target_coord = board.next_square(position, attack_direction)
@@ -115,20 +122,6 @@ class Pawn < ChessPiece
       enemy?(target)
     end
   end
-
-  def range
-    first_move? ? @range[:start] : @range[:regular]
-  end
-
-  def movement
-    @movement[:move].concat(attack_moves(@movement[:capture]))
-  end
-
-  def first_move?
-    start_row = color == :white ? 1 : 6
-    position[0] == start_row
-  end
-end
 
 # King class
 class King
