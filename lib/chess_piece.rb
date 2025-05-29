@@ -12,8 +12,8 @@ class ChessPiece
     @range = database[:range]
   end
 
-  # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - BEGIN
-  # -------------------------------------------------------
+  # METHODS TO DETERMINE VARIOUS INFORMATION ABOUT BOTH SIDES AND SELF - BEGIN
+  # ---------------------------------------------------------------------------
   def position
     board.squares.each_with_index do |row, y_coord|
       x_coord = row.index(self)
@@ -34,12 +34,17 @@ class ChessPiece
     board.side[color]
   end
 
+  def king
+    commander.army.find { |piece| piece.type == :king }
+  end
+
   def enemy?(target)
     target.color == opponent_color
   end
 
   def any_moves?
-    return false if valid_moves.empty?
+    # return false if valid_moves.empty?
+    return false if save_moves.empty?
 
     true
   end
@@ -48,8 +53,8 @@ class ChessPiece
   def friend?(field)
     field.color == @color
   end
-  # ------------------------------------------------------
-  # METHODS TO DETERMINE VARIOUS STATES OF PIECEs - END
+  # ---------------------------------------------------------------------------
+  # METHODS TO DETERMINE VARIOUS INFORMATION ABOUT BOTH SIDES AND SELF - END
 
   # METHODS FOR FINDING VALID MOVES - BEGIN
   # ------------------------------------------------------
@@ -88,36 +93,30 @@ class ChessPiece
     end
   end
   # -----------------------------------------------------
-  # METHODS FOR FINDING VALID MOVES - BEGIN
+  # METHODS FOR FINDING VALID MOVES - END
 
-  # METHODS TO DEAL WITH CHECK? - NO FUNCTIONAL YET - BEGIN
+  # METHODS TO DEAL WITH CHECK? - NOT FUNCTIONAL YET - BEGIN
   # --------------------------------------------------------
   def save_moves
     moves = valid_moves
     moves.reject { |coord| cause_check?(coord) }
   end
 
-  # check if moving the piece would cause Player to be in check
-  # def cause_check?
-  #   current_position = position
-  #   board.change_square(current_position, EmptySquare.new)
-  #   result = commander.check?
-  #   board.change_square(current_position, self)
-  #   result
-  # end
-
-  def king
-    commander.army.find { |piece| piece.type == :king }
-  end
-
+  # ERROR: somewhere during execution, position gives back nil which causes crash
+  # possible that pice is calling method while not on the field
   def cause_check?(coord)
     start = position
     target = board.select_square(coord)
     move(coord)
-    result = king.check?
-    move(start)
-    board.change_square(coord, target)
+    result = commander.check?
+    rewind_move(target, start)
     result
+  end
+
+  def rewind_move(target, start)
+    current_pos = position
+    move(start)
+    board.change_square(current_pos, target)
   end
 end
 # --------------------------------------------------------
