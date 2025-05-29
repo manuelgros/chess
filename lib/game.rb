@@ -27,9 +27,9 @@ class Game
     puts piece_messages(:piece_moves, active_piece)
     target = current_player.select_destination
 
-    if active_piece.valid_moves.include?(target)
+    if active_piece.save_moves.include?(target)
       active_piece.move(target)
-      puts piece_messages(:move, active_piece)
+      # puts piece_messages(:move, active_piece)
       display_board
       return
     end
@@ -54,6 +54,6 @@ class Game
   end
 
   def check_mate? # Place holder to test full_match
-    false
+    current_player.opponent.check_mate?
   end
 end
