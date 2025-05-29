@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# BUG: PAWNS CAN ALSO CAPTURE PIECE FRONTAL
+
 # Subclass Pawn
 class Pawn < ChessPiece
   # adjusted getter methods - BEGIN
