@@ -40,8 +40,12 @@ class Army
     board.side[opponent_color]
   end
 
+  # def king
+  #   army.find { |piece| piece.type == :king }
+  # end
+
   def king
-    army.find { |piece| piece.type == :king }
+    board.squares.flatten.find { |piece| piece.color == color && piece.type == :king }
   end
 
   def check?
