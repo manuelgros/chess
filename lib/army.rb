@@ -11,7 +11,7 @@ class Army
   include GameCommunication
   include ChessPieceDatabase
 
-  attr_reader :player_name, :color, :army
+  attr_reader :player_name, :color, :board, :army
 
   def initialize(color, board)
     @color = color
@@ -26,16 +26,18 @@ class Army
   end
 
   def opponent_color
-    @color == :white ? :black : :white
+    color == :white ? :black : :white
   end
 
   # returns array with all enemy pieces on board
-  # def opponent_army
-  #   @board.squares.flatten.select { |piece| piece.color == opponent_color }
-  # end
+  # used .opponent in combination with .army, but that caused errors. At some point pieces where throwing nil
+  # for position. It is safer to pull pieces from board
+  def opponent_army
+    board.squares.flatten.select { |piece| piece.color == opponent_color }
+  end
 
   def opponent
-    @board.side[opponent_color]
+    board.side[opponent_color]
   end
 
   def king
@@ -43,7 +45,7 @@ class Army
   end
 
   def check?
-    opponent.army.each do |piece|
+    opponent_army.each do |piece|
       return true if piece.valid_moves.include?(king.position)
     end
 
