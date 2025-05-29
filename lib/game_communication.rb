@@ -37,7 +37,7 @@ module GameCommunication
 
   def piece_messages(message, piece)
     {
-      piece_moves: "Selected piece: #{(piece.color.to_s.capitalize + piece.type.to_s.capitalize).green}\nMoves: #{piece.valid_moves.to_s.green}",
+      piece_moves: "Selected piece: #{(piece.color.to_s.capitalize + piece.type.to_s.capitalize).green}\nMoves: #{piece.save_moves.to_s.green}",
       move: "#{(piece.color.to_s.capitalize + piece.type.to_s.capitalize).green} moves to #{piece.position[0].to_s.green} | #{piece.position[1].to_s.green}",
       invalid_move: "Invalid move for #{(piece.color.to_s.capitalize + piece.type.to_s.capitalize).green}. Please select something else."
     }[message]
