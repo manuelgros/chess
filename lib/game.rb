@@ -46,11 +46,14 @@ class Game
   def full_match
     # script to run a full match until end conditions are met (win, draw, capitulation etc.)
     display_board
-    until check_mate?
+    loop do
       puts game_messages(:new_turn)
       turn
+      break if check_mate?
+
       change_current_player
     end
+    puts "#{current_player.player_name} won!"
   end
 
   def check_mate? # Place holder to test full_match
