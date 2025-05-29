@@ -30,17 +30,28 @@ class Army
   end
 
   # returns array with all enemy pieces on board
-  def opponent_army
-    @board.squares.flatten.select { |piece| piece.color == opponent_color }
+  # def opponent_army
+  #   @board.squares.flatten.select { |piece| piece.color == opponent_color }
+  # end
+
+  def opponent
+    @board.side[opponent_color]
+  end
+
+  def king
+    army.find { |piece| piece.type == :king }
   end
 
   def check?
-    king = army.find { |piece| piece.type == :king }
-    opponent_army.each do |piece|
+    opponent.army.each do |piece|
       return true if piece.valid_moves.include?(king.position)
     end
 
     false
+  end
+
+  def check_mate?
+    check? && !king.any_moves?
   end
 
   def select_piece
