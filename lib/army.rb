@@ -4,7 +4,6 @@ require_relative '../lib/game_communication'
 require_relative '../lib/chess_piece'
 require_relative '../lib/chess_piece_database'
 require_relative '../lib/pawn'
-require_relative '../lib/king'
 
 # Player Class
 class Army
@@ -30,8 +29,6 @@ class Army
   end
 
   # returns array with all enemy pieces on board
-  # used .opponent in combination with .army, but that caused errors. At some point pieces where throwing nil
-  # for position. It is safer to pull pieces from board
   def opponent_army
     board.squares.flatten.select { |piece| piece.color == opponent_color }
   end
@@ -81,8 +78,6 @@ class Army
   def create_chess_piece(type, database)
     if type == :pawn
       Pawn.new(@color, @board, type, database)
-    elsif type == :king
-      King.new(@color, @board, type, database)
     else
       ChessPiece.new(@color, @board, type, database)
     end
