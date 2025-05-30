@@ -34,7 +34,7 @@ class Game
       return
     end
 
-    puts piece_messages(:invalid_move, active_piece, target)
+    puts piece_messages(:invalid_move, active_piece)
 
     turn
   end
