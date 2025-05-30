@@ -30,6 +30,7 @@ class Game
     if active_piece.save_moves.include?(target)
       active_piece.move(target)
       # puts piece_messages(:move, active_piece)
+      reset_en_passant
       display_board
       return
     end
@@ -37,6 +38,12 @@ class Game
     puts piece_messages(:invalid_move, active_piece)
 
     turn
+  end
+
+  def reset_en_passant
+    board.squares.flatten.each do |square|
+      square.en_passant == false if square.type == :empty
+    end
   end
 
   def change_current_player
