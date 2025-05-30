@@ -2,7 +2,7 @@
 
 # Chess_board class
 class ChessBoard
-  attr_reader :squares, :side
+  attr_reader :squares, :side, :start_rows
 
   def initialize
     @squares = create_square_array
@@ -10,7 +10,7 @@ class ChessBoard
       white: Army.new(:white, self),
       black: Army.new(:black, self)
     }
-    @start_row = {
+    @start_rows = {
       white: [0, 1],
       black: [7, 6]
     }
@@ -21,12 +21,18 @@ class ChessBoard
     Array.new(8) { Array.new(8) { EmptySquare.new } }
   end
 
+  def pawn_rank(color)
+    side[color].army.select { |piece| piece.type == :pawn }
+  end
+
+  def major_rank(color)
+    side[color].army.reject { |piece| piece.type == :pawn }
+  end
+
   def setup_side(color)
     # replaces starting rows in @squares with pre-sorted army array
-    army = side[color].army
-    start_rows = @start_row[color]
-    @squares[start_rows[0]] = army[0..7] # major rank
-    @squares[start_rows[1]] = army[8..15] # pawn rank
+    @squares[start_rows[color][0]] = major_rank(color) # major rank
+    @squares[start_rows[color][1]] = pawn_rank(color) # pawn rank
   end
 
   def setup_board
