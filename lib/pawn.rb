@@ -14,10 +14,28 @@ class Pawn < ChessPiece
   end
 
   def first_move?
-    start_row = color == :white ? 1 : 6
-    position[0] == start_row
+    position[0] == board.start_rows[color][1]
   end
   # adjusted getter methods - END
+
+  # Adjusted reach(); doesn't allow to take enemy piece with normal movement
+  # Pawn is only allowed to take enemy with diagonally moves.
+  def reach(direction)
+    current_pos = position
+    reachable = []
+
+    range.times do
+      current_pos = board.next_square(current_pos, direction)
+      break unless board.includes_coordinates?(current_pos)
+
+      target = @board.select_square(current_pos)
+
+      break unless target.type == :empty
+
+      reachable << current_pos
+    end
+    reachable
+  end
 
   # returns array with coordinated if target is enemy
   def attack_moves(attack_direction)
