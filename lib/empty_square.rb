@@ -2,10 +2,11 @@
 
 # EmptySquare Class to represent empty field on the board
 class EmptySquare
-  attr_accessor :board
+  attr_accessor :board, :en_passant
 
   def initialize(board)
     @board = board
+    @en_passant = false
   end
 
   def position
@@ -20,6 +21,10 @@ class EmptySquare
     :none
   end
 
+  def en_passant?
+    en_passant
+  end
+
   def type
     :empty
   end
@@ -29,6 +34,6 @@ class EmptySquare
   end
 
   def enemy?
-    false
+    en_passant
   end
 end
