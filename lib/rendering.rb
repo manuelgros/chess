@@ -60,11 +60,10 @@ module Rendering
   end
 
   def display_board
-    field_color = :black
     @board.squares.reverse.each_with_index do |row, row_index|
+      field_color = row_index.odd? ? :white : :black
       print "#{(row_index - 7).abs}  ".colorize(:yellow)
       display_row(field_color, row)
-      field_color = field_color == :white ? :black : :white
     end
     puts '    0  1  2  3  4  5  6  7'.colorize(:yellow)
   end
