@@ -18,7 +18,7 @@ class ChessBoard
   end
 
   def create_square_array
-    Array.new(8) { Array.new(8) { EmptySquare.new } }
+    Array.new(8) { Array.new(8) { EmptySquare.new(self) } }
   end
 
   def pawn_rank(color)

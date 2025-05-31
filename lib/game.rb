@@ -25,6 +25,7 @@ class Game
   def turn
     active_piece = current_player.select_piece
     puts piece_messages(:piece_moves, active_piece)
+    display_board(active_piece.save_moves)
     target = current_player.select_destination
 
     if active_piece.save_moves.include?(target)

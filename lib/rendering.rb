@@ -43,27 +43,30 @@ module Rendering
     end
   end
 
-  def color_square(field_color, symbol)
+  def render_square(field_color, field, moves)
+    symbol = translate(field)
+    return ColorizedString[symbol].on_light_green.underline if moves.include?(field.position)
     return ColorizedString[symbol].on_white if field_color == :white
 
     ColorizedString[symbol].on_black
   end
 
-  def display_row(field_color, row)
+  def display_row(field_color, row, moves)
     row.each do |field|
-      symbol = translate(field)
-      print color_square(field_color, symbol)
+      print render_square(field_color, field, moves)
       field_color = field_color == :white ? :black : :white
     end
 
     puts "\n"
   end
 
-  def display_board
+  # if called without argument it displays board as is. With moves_array it highlights all coordinates
+  # in the array green
+  def display_board(moves = [])
     @board.squares.reverse.each_with_index do |row, row_index|
       field_color = row_index.odd? ? :white : :black
       print "#{(row_index - 7).abs}  ".colorize(:yellow)
-      display_row(field_color, row)
+      display_row(field_color, row, move)
     end
     puts '    0  1  2  3  4  5  6  7'.colorize(:yellow)
   end

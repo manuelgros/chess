@@ -61,7 +61,7 @@ class ChessPiece
   def move(destination)
     start = position
     board.change_square(destination, self)
-    board.change_square(start, EmptySquare.new)
+    board.change_square(start, EmptySquare.new(board))
     destination
   end
 
