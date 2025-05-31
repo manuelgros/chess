@@ -43,10 +43,10 @@ module Rendering
     end
   end
 
-  def color_square(field_color, field)
-    return ColorizedString[field].on_white if field_color == :white
+  def color_square(field_color, symbol)
+    return ColorizedString[symbol].on_white if field_color == :white
 
-    ColorizedString[field].on_black
+    ColorizedString[symbol].on_black
   end
 
   def display_row(field_color, row)
