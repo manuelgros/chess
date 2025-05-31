@@ -25,10 +25,6 @@ class EmptySquare
     en_passant
   end
 
-  def en_passant?
-    en_passant
-  end
-
   def type
     :empty
   end
@@ -38,7 +34,6 @@ class EmptySquare
   end
 
   def enemy?
-    en_passant
     en_passant
   end
 end
