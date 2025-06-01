@@ -4,11 +4,13 @@ require_relative '../lib/game_communication'
 require_relative '../lib/chess_piece'
 require_relative '../lib/chess_piece_database'
 require_relative '../lib/pawn'
+require_relative '../lib/en_passant'
 
 # Player Class
 class Army
   include GameCommunication
   include ChessPieceDatabase
+  include EnPassant
 
   attr_reader :player_name, :color, :board, :army
 
