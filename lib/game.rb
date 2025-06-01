@@ -23,9 +23,10 @@ class Game
 
   # will need splitting up when more actions are added (save etc.)
   def turn
+    current_player.reset_en_passant
     active_piece = current_player.select_piece
-    puts piece_messages(:piece_moves, active_piece)
     display_board(active_piece.save_moves)
+    puts piece_messages(:piece_moves, active_piece)
     target = current_player.select_destination
 
     if active_piece.save_moves.include?(target)
