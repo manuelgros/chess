@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../lib/en_passant'
+
 # BUG: PAWNS CAN ALSO CAPTURE PIECE FRONTAL
 
 # Subclass Pawn
 class Pawn < ChessPiece
+  include EnPassant
   # adjusted getter methods - BEGIN
   def range
     first_move? ? @range[:start] : @range[:regular]
@@ -53,5 +56,10 @@ class Pawn < ChessPiece
       target = @board.select_square(destination)
       enemy?(target)
     end
+  end
+
+  def move(destination)
+    mark_en_passant if double_step?(destination)
+    super(destination)
   end
 end
