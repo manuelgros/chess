@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
+require_relative '../lib/en_passant'
+
 # EmptySquare Class to represent empty field on the board
 class EmptySquare
-  attr_accessor :board
+  include EnPassant
+
+  attr_accessor :board, :color
 
   def initialize(board)
     @board = board
+    @color = color
   end
 
   def position
@@ -16,12 +21,16 @@ class EmptySquare
     nil
   end
 
-  def color
-    :none
-  end
+  # def color
+  #   :none
+  # end
 
   def type
     :empty
+  end
+
+  def valid_moves
+    []
   end
 
   def any_moves?
