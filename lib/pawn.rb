@@ -16,6 +16,10 @@ class Pawn < ChessPiece
   def first_move?
     position[0] == board.start_rows[color][1]
   end
+
+  def moving_straight?(direction)
+    direction[1].zero?
+  end
   # adjusted getter methods - END
 
   # Adjusted reach(); doesn't allow to take enemy piece with normal movement
@@ -30,9 +34,12 @@ class Pawn < ChessPiece
 
       target = @board.select_square(current_pos)
 
-      break unless target.type == :empty
-
-      reachable << current_pos
+      if target.type == :empty
+        reachable << current_pos
+      else
+        reachable << current_pos if enemy?(target) && !moving_straight?(direction)
+        break
+      end
     end
     reachable
   end
