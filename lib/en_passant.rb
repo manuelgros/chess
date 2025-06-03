@@ -17,7 +17,7 @@ end
 # Submodule for EnPassant, including all methods in Pawn class
 module EnPassantPawn
   def double_step?(destination)
-    destination[0] == (position[0] + 2)
+    (destination[0] - position[0].abs == 2)
   end
 
   # method changes the color of EmptySquare object that is being over jumped to own color. It will then
