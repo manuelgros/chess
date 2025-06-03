@@ -20,7 +20,7 @@ module EnPassantPawn
     (destination[0] - position[0]).abs == 2
   end
 
-  # method changes the color of EmptySquare object that is being over jumped to own color. It will then
+  # method changes the color of EmptySquare object that is being jumped to own color. It will then
   # be registered as variable target at opponents next turn.
   def mark_en_passant
     jumped_square = board.select_square(board.next_square(position, @movement[color][:move][0]))
