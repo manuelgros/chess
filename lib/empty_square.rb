@@ -6,11 +6,12 @@ require_relative '../lib/en_passant'
 class EmptySquare
   include EnPassant
 
-  attr_accessor :board, :color
+  attr_reader :board
+  attr_accessor :color
 
   def initialize(board)
     @board = board
-    @color = color
+    @color = :none
   end
 
   def position
