@@ -33,10 +33,6 @@ module EnPassantEmptySquare
   def en_passant(color)
     @color = color
   end
-
-  # def reset_en_passant
-  #   @color = :none
-  # end
 end
 
 # Submodule for EnPassant, including all methods used in Army class
