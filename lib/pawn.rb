@@ -10,7 +10,7 @@ class Pawn < ChessPiece
   end
 
   def movement
-    @movement[color][:move].concat(attack_moves(@movement[color][:capture]))
+    @movement[color][:move] + attack_moves(@movement[color][:capture])
   end
 
   def first_move?
