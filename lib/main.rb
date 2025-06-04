@@ -7,8 +7,9 @@ require_relative '../lib/game'
 
 # Run code her
 game = Game.new
-game.full_match
+# game.full_match
 
-# puts game.current_player.class.name
-# puts game.board.select_square([1, 1]).class.name
-# puts game.board.select_square([2, 1]).class.name
+game.board.select_square([1, 1]).move([6, 1])
+game.board.change_square([7, 1], EmptySquare.new(game.board))
+game.board.select_square([6, 1]).move([7, 1])
+puts game.board.select_square([7, 1]).type
