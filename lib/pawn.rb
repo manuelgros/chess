@@ -61,5 +61,23 @@ class Pawn < ChessPiece
   def move(destination)
     mark_en_passant if double_step?(destination)
     super(destination)
+    execute_promotion if promote?
+  end
+
+  # basic but working promote logic. Needs additional save guards against invalid player input
+  def promote?
+    last_row = color == :white ? 7 : 0
+    position[0] == last_row
+  end
+
+  def promote_to(type)
+    new_piece = commander.create_chess_piece(type)
+    board.change_square(position, new_piece)
+  end
+
+  def execute_promotion
+    puts 'Your Pawn can be promoted! Which type do you choose? (queen, rook, knight, bishop):'
+    type = gets.chomp.downcase.to_sym
+    promote_to(type)
   end
 end
