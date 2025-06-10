@@ -22,7 +22,8 @@ class Army
   end
 
   def ask_player_name
-    print player_messages(:get_name)
+    # print player_messages(:get_name)
+    print "Type in name for #{color} Player: "
     gets.chomp.capitalize
   end
 
@@ -55,25 +56,8 @@ class Army
     check? && !king.any_moves?
   end
 
-  def select_piece
-    puts player_messages(:get_selection)
-    selected_piece = @board.select_square(ask_coordinates)
-    if selected_piece.any_moves? && selected_piece.color == @color
-      selected_piece
-    else
-      puts player_messages(:invalid_selection)
-      select_piece
-    end
-  end
-
-  def select_destination
-    puts player_messages(:get_destination)
-    destination = ask_coordinates
-    target = @board.select_square(destination)
-    return destination unless target.color == @color
-
-    puts player_messages(:invalid_destination)
-    select_destination
+  def owns?(piece)
+    piece.color == color
   end
 
   # Methods to create and sort chess army
