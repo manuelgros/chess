@@ -74,7 +74,6 @@ class Game
 
   def full_match
     # script to run a full match until end conditions are met (win, draw, capitulation etc.)
-    # display_board
     loop do
       puts game_messages(:new_turn)
       take_turn
@@ -131,7 +130,7 @@ class Game
     destination = destination_input
     return destination if active_piece.save_moves.include?(destination)
 
-    puts player_messages(:invalid_destination)
+    puts piece_messages(:invalid_move, active_piece)
     select_destination(active_piece)
   end
 
