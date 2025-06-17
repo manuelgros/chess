@@ -28,6 +28,10 @@ class Game
     @current_player = @white_army
   end
 
+  def self.start_game
+    Game.new.full_match
+  end
+
   def change_current_player
     @current_player = current_player == white_army ? black_army : white_army
   end
