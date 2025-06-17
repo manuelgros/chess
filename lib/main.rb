@@ -6,8 +6,7 @@ require_relative '../lib/chess_board'
 require_relative '../lib/game'
 
 # Run code her
-game = Game.new
-game.full_match
+Game.start_game
 
 # ====== Pawn Promote Test =========
 # game.board.select_square([1, 1]).move([6, 1])
