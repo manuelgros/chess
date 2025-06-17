@@ -24,7 +24,7 @@ module EnPassantPawn
   # be registered as variable target at opponents next turn.
   def mark_en_passant
     jumped_square = board.select_square(board.next_square(position, @movement[color][:move][0]))
-    jumped_square.en_passant(color)
+    jumped_square.en_passant(color) if jumped_square.type == :empty
   end
 end
 
