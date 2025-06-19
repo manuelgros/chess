@@ -84,8 +84,6 @@ class Game
       puts game_messages(:new_turn)
       take_turn
       break if check_mate?
-
-      change_current_player
     end
     puts "#{current_player.player_name} won!"
   end
@@ -127,6 +125,7 @@ class Game
 
     active_piece.move(target)
     puts piece_messages(:move, active_piece)
+    change_current_player
     nil
   end
 
