@@ -102,8 +102,6 @@ class ChessPiece
     moves.reject { |coord| cause_check?(coord) }
   end
 
-  # ERROR: somewhere during execution, position gives back nil which causes crash
-  # possible that pice is calling method while not on the field
   def cause_check?(coord)
     start = position
     target = board.select_square(coord)
