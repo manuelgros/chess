@@ -85,7 +85,7 @@ module Saveable
 
     def display_slots
       Game.save_slots_arr.each_with_index do |file, idx|
-        next if idx == 0
+        next if idx.zero?
 
         puts "[#{idx}]".green + " Slot: #{display_file(file)}"
       end
