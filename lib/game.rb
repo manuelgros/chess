@@ -123,6 +123,8 @@ class Game
   def move_piece(selection)
     active_piece = validate_piece_selection(selection)
     target = select_destination(active_piece)
+    return send(COMMAND_MAP[target]) if target == 'back'
+
     active_piece.move(target)
     puts piece_messages(:move, active_piece)
     nil
@@ -141,9 +143,26 @@ class Game
     player_input
   end
 
+  # def select_destination(active_piece)
+  #   destination = destination_input
+  #   return destination if active_piece.save_moves.include?(destination)
+
+  #   puts piece_messages(:invalid_move, active_piece)
+  #   select_destination(active_piece)
+  # end
+
+  # Fix bug were when using back command and then save, the move_piece method is still suspended
+  # and after the save finished with the now invalid input
+  # Needs refining together with the move method
   def select_destination(active_piece)
-    destination = destination_input
-    return destination if active_piece.save_moves.include?(destination)
+    puts player_messages(:get_destination)
+    input = gets.downcase.strip
+
+    return input if input == 'back'
+
+    if input.match?(/\A[0-7]{2}\z/) && active_piece.save_moves.include?(input.chars.map(&:to_i))
+      return input.chars.map(&:to_i)
+    end
 
     puts piece_messages(:invalid_move, active_piece)
     select_destination(active_piece)
