@@ -5,11 +5,13 @@ require_relative '../lib/chess_board'
 require_relative '../lib/empty_square'
 require_relative '../lib/game_communication'
 require_relative '../lib/rendering'
+require './lib/saveable'
 
 # Class for Game Logic
 class Game
   include GameCommunication
   include Rendering
+  include Saveable
 
   attr_reader :board, :white_army, :black_army
   attr_accessor :current_player
@@ -18,7 +20,7 @@ class Game
     'back' => :take_turn,
     'capitulate' => :capitulate,
     'exit' => :exit_game,
-    'save' => 'Game saved'
+    'save' => :save_game
   }.freeze
 
   def initialize
@@ -29,7 +31,7 @@ class Game
   end
 
   def self.start_game
-    Game.new.full_match
+    select_game # Method from Saveable Module
   end
 
   def change_current_player
