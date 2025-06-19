@@ -101,10 +101,19 @@ class Game
     exit
   end
 
-  # Add reminder to save when feature is available
+  # Ugly first draft
   def exit_game
-    puts 'Game is terminated'
-    exit
+    puts 'You are about to exit the game. Do you want to serve first? [Y/N]'
+    answer = gets.chomp
+    if answer.downcase == 'y'
+      save_game
+      exit
+    elsif answer.downcase == 'n'
+      exit
+    else
+      puts 'Invalid input'.red
+      exit_game
+    end
   end
   # ---------------------------------------------------------
   # METHODS FOR GENERAL GAME LOGIC - END
