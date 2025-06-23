@@ -96,7 +96,7 @@ module Saveable
   module Messages
     def saveable_messages(message)
       {
-        want_to_load: "Do you want to load an existing game or start new?\n#{'[1]'.green} LOAD\n#{'[2]'.green} NEW ",
+        want_to_load: 'Do you want to load an existing game or start new?'.red + "\n#{'[1]'.green} LOAD\n#{'[2]'.green} NEW ",
         select_save: 'Select slot by number or type NEW to start new game:',
         invalid_selection: 'Invalid selection. Select one of the three slots by number (1 2 3)',
         invalid_load: "Invalid selection OR empty save game, choose again...\n".yellow
