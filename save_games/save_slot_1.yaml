@@ -332,7 +332,7 @@ board: &1 !ruby/object:ChessBoard
         :start: 2
   - - !ruby/object:EmptySquare
       board: *1
-      color: :none
+      color: :white
     - !ruby/object:EmptySquare
       board: *1
       color: :none
@@ -401,6 +401,54 @@ board: &1 !ruby/object:ChessBoard
     - !ruby/object:EmptySquare
       board: *1
       color: :none
+  - - !ruby/object:EmptySquare
+      board: *1
+      color: :white
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+  - - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
+    - !ruby/object:EmptySquare
+      board: *1
+      color: :none
   - - &26 !ruby/object:Pawn
       color: :black
       board: *1
@@ -427,54 +475,6 @@ board: &1 !ruby/object:ChessBoard
       range:
         :regular: 1
         :start: 2
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-  - - !ruby/object:EmptySquare
-      board: *1
-      color: :black
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-    - !ruby/object:EmptySquare
-      board: *1
-      color: :none
-  - - !ruby/object:EmptySquare
-      board: *1
-      color: :none
     - &27 !ruby/object:Pawn
       color: :black
       board: *1
@@ -853,4 +853,4 @@ board: &1 !ruby/object:ChessBoard
     - 6
 white_army: *34
 black_army: *35
-current_player: *34
+current_player: *35
