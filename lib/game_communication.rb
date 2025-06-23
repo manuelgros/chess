@@ -7,6 +7,19 @@ require_relative '../lib/game'
 module GameCommunication
   # OUTPUT METHODS
   # rubocop:disable Layout/LineLength, Metrics/AbcSize
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  # Module containing Class methods for the Communication module
+  module ClassMethods
+    def introduction
+      "Welcome to this little Chess application.
+This game is full run in your console and navigated through keyboard input. There are various commands you can use like, 'back', 'save' or 'exit' (use the 'help' keyword to get a list of all valid commands).
+To select a piece you want to move, simply use its coordinates on the chess board, which are the numbers 0-7 on the Y and X Axis, with Y being the first number and X the second (example: 14 is row 1 on Y and 4 on X).".yellow
+    end
+  end
+
   def player_messages(message)
     {
       # get_name: "Type in name for #{color} Player: ",

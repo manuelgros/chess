@@ -31,6 +31,7 @@ class Game
   end
 
   def self.start_game
+    puts introduction
     select_game # Method from Saveable Module
   end
 
