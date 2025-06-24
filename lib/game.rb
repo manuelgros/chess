@@ -54,20 +54,6 @@ class Game
       player_input
     end
   end
-
-  def destination_input
-    puts player_messages(:get_destination)
-    input = gets.downcase.strip
-
-    if input == 'back'
-      send(COMMAND_MAP[input])
-    elsif input.match?(/\A[0-7]{2}\z/)
-      input.chars.map(&:to_i)
-    else
-      puts player_messages(:coord_input_error)
-      destination_input
-    end
-  end
   # ---------------------------------------------------------
   # INPUT METHODS END
 
@@ -108,7 +94,6 @@ class Game
     exit
   end
 
-  # Ugly first draft
   def exit_game
     puts 'You are about to exit the game. Do you want to serve first? (Y for yes / enter to skip)'
     answer = gets.chomp
@@ -122,6 +107,8 @@ class Game
   # ------------------------------------------------------------
   def move_piece(selection)
     active_piece = validate_piece_selection(selection)
+    return player_input if active_piece.nil?
+
     target = select_destination(active_piece)
     return send(COMMAND_MAP[target]) if target == 'back'
 
@@ -141,20 +128,13 @@ class Game
     end
 
     puts player_messages(:invalid_selection)
-    player_input
+    nil
   end
 
-  # def select_destination(active_piece)
-  #   destination = destination_input
-  #   return destination if active_piece.save_moves.include?(destination)
+  def valid_piece?(piece)
+    piece.any_moves? && current_player.owns?(piece)
+  end
 
-  #   puts piece_messages(:invalid_move, active_piece)
-  #   select_destination(active_piece)
-  # end
-
-  # Fix bug were when using back command and then save, the move_piece method is still suspended
-  # and after the save finished with the now invalid input
-  # Needs refining together with the move method
   def select_destination(active_piece)
     puts player_messages(:get_destination)
     input = gets.downcase.strip
@@ -167,10 +147,6 @@ class Game
 
     puts piece_messages(:invalid_move, active_piece)
     select_destination(active_piece)
-  end
-
-  def valid_piece?(piece)
-    piece.any_moves? && current_player.owns?(piece)
   end
   # ------------------------------------------------------------
   # METHODS TO MAKE A MOVE - END
