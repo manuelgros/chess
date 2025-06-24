@@ -35,10 +35,6 @@ class Game
     select_game # Method from Saveable Module
   end
 
-  def change_current_player
-    @current_player = current_player == white_army ? black_army : white_army
-  end
-
   # INPUT METHODS - BENIN
   # ---------------------------------------------------------
   def player_input
@@ -68,7 +64,7 @@ class Game
   def full_match
     # script to run a full match until end conditions are met (win, draw, capitulation etc.)
     loop do
-      puts game_messages(:new_turn)
+      puts player_messages(:new_turn)
       take_turn
       break if check_mate?
     end
@@ -78,6 +74,10 @@ class Game
 
   def check_mate?
     current_player.opponent.check_mate?
+  end
+
+  def change_current_player
+    @current_player = current_player == white_army ? black_army : white_army
   end
 
   # basic methods, may need extension
