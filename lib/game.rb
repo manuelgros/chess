@@ -87,6 +87,7 @@ class Game
       break if check_mate?
     end
     puts "#{current_player.player_name} won!"
+    play_again
   end
 
   def check_mate?
@@ -95,24 +96,24 @@ class Game
 
   # basic methods, may need extension
   def capitulate
-    winner = current_player.opponent.player_name
-    puts "#{current_player.player_name} has given up. #{winner} has won!"
+    puts player_messages(:capitulate)
+    play_again
+  end
+
+  def play_again
+    puts 'Do you want to play again?'
+    answer = gets.chomp
+    return Game.start_game if answer.downcase == 'y'
+
     exit
   end
 
   # Ugly first draft
   def exit_game
-    puts 'You are about to exit the game. Do you want to serve first? [Y/N]'
+    puts 'You are about to exit the game. Do you want to serve first? (Y for yes / enter to skip)'
     answer = gets.chomp
-    if answer.downcase == 'y'
-      save_game
-      exit
-    elsif answer.downcase == 'n'
-      exit
-    else
-      puts 'Invalid input'.red
-      exit_game
-    end
+    save_game if answer.downcase == 'y'
+    exit
   end
   # ---------------------------------------------------------
   # METHODS FOR GENERAL GAME LOGIC - END
