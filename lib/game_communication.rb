@@ -27,7 +27,8 @@ To select a piece you want to move, simply use its coordinates on the chess boar
       get_destination: "Select destination by coordinated or #{'back'.blue} to select different piece: ",
       coord_input_error: 'Invalid input. Please select a valid command or a valid board coordinate (example: 14)',
       invalid_destination: 'The target you selected is invalid. Please select a different square on the board',
-      invalid_selection: "This selection is invalid or there are no moves available for this piece. Please select a different piece for your move.\n\n"
+      invalid_selection: "This selection is invalid or there are no moves available for this piece. Please select a different piece for your move.\n\n",
+      capitulate: "#{current_player.player_name} has given up. #{current_player.opponent.player_name} has won!"
     }[message]
   end
 
