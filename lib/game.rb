@@ -57,6 +57,7 @@ class Game
   # ---------------------------------------------------------
   def take_turn
     display_board
+    puts player_messages(:check) if current_player.check?
     current_player.reset_en_passant
     player_input
   end

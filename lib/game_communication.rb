@@ -16,7 +16,7 @@ module GameCommunication
     def introduction
       "Welcome to this little Chess application.
 This game is full run in your console and navigated through keyboard input. There are various commands you can use like, 'back', 'save' or 'exit' (use the 'help' keyword to get a list of all valid commands).
-To select a piece you want to move, simply use its coordinates on the chess board, which are the numbers 0-7 on the Y and X Axis, with Y being the first number and X the second (example: 14 is row 1 on Y and 4 on X).".yellow
+To select a piece you want to move, simply use its coordinates on the chess board, which are the numbers 0-7 on the Y and X Axis, with Y being the first number and X the second (example: 14 is row 1 on Y and column 4 on X).".yellow
     end
   end
 
@@ -29,7 +29,8 @@ To select a piece you want to move, simply use its coordinates on the chess boar
       invalid_destination: 'The target you selected is invalid. Please select a different square on the board',
       invalid_selection: "This selection is invalid or there are no moves available for this piece. Please select a different piece for your move.\n\n",
       capitulate: "#{current_player.player_name} has given up. #{current_player.opponent.player_name} has won!",
-      new_turn: "\n#{current_player.player_name}, it is your turn.".yellow.bold
+      new_turn: "\n#{current_player.player_name}, it is your turn.".yellow.bold,
+      check: "#{current_player.player_name} your King is in danger!".red
     }[message]
   end
 
