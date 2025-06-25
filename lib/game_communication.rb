@@ -11,15 +11,6 @@ module GameCommunication
     base.extend(ClassMethods)
   end
 
-  # Module containing Class methods for the Communication module
-  module ClassMethods
-    def introduction
-      "Welcome to this little Chess application.
-This game is full run in your console and navigated through keyboard input. There are various commands you can use like, 'back', 'save' or 'exit' (use the 'help' keyword to get a list of all valid commands).
-To select a piece you want to move, simply use its coordinates on the chess board, which are the numbers 0-7 on the Y and X Axis, with Y being the first number and X the second (example: 14 is row 1 on Y and column 4 on X).".yellow
-    end
-  end
-
   def player_messages(message)
     {
       # get_name: "Type in name for #{color} Player: ",
@@ -46,6 +37,15 @@ To select a piece you want to move, simply use its coordinates on the chess boar
     {
       capture: "#{piece.color.capitalize} #{piece.type.capitalize} captures #{@board.select_square(target).color.capitalize} #{@board.select_square(target).type.capitalize} on #{target[0]} / #{target[1]}"
     }[message]
+  end
+
+  # Module containing Class methods for the Communication module
+  module ClassMethods
+    def introduction
+      "Welcome to this little Chess application.
+This game is full run in your console and navigated through keyboard input. There are various commands you can use like, 'back', 'save' or 'exit' (use the 'help' keyword to get a list of all valid commands).
+To select a piece you want to move, simply use its coordinates on the chess board, which are the numbers 0-7 on the Y and X Axis, with Y being the first number and X the second (example: 14 is row 1 on Y and column 4 on X).".yellow
+    end
   end
   # rubocop:enable Layout/LineLength, Metrics/AbcSize
 end
