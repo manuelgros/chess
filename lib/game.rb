@@ -112,8 +112,8 @@ class Game
     target = select_destination(active_piece)
     return send(COMMAND_MAP[target]) if target == 'back'
 
-    active_piece.move(target)
     puts piece_messages(:move, active_piece)
+    active_piece.move(target)
     change_current_player
     nil
   end

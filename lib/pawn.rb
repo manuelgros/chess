@@ -7,6 +7,7 @@ require_relative '../lib/en_passant'
 # Subclass Pawn
 class Pawn < ChessPiece
   include EnPassant
+
   # adjusted getter methods - BEGIN
   def range
     first_move? ? @range[:start] : @range[:regular]
@@ -70,14 +71,16 @@ class Pawn < ChessPiece
     position[0] == last_row
   end
 
-  def promote_to(type)
-    new_piece = commander.create_chess_piece(type)
+  def promote_to(new_type)
+    new_piece = commander.create_chess_piece(new_type)
     board.change_square(position, new_piece)
+    puts "#{"#{color.capitalize} Pawn".green} is promoted to #{new_type.to_s.capitalize.green}"
   end
 
   def execute_promotion
     puts 'Your Pawn can be promoted! Which type do you choose? (queen, rook, knight, bishop):'
-    type = gets.chomp.downcase.to_sym
-    promote_to(type)
+    new_type = gets.chomp.downcase.to_sym
+    # commander.promote_pawn(position, type)
+    promote_to(new_type)
   end
 end
