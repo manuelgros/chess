@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
+require_relative '../lib/chess_piece_database'
+
 # Class for single ChessPiece
 class ChessPiece
   attr_reader :color, :type, :movement, :range, :board
 
-  def initialize(color, board, type, database)
+  include ChessPieceDatabase
+
+  def initialize(color, board, type)
     @color = color
     @board = board
     @type = type
-    @movement = database[:move_direction]
-    @range = database[:range]
+    @movement = chess_piece_database[type][:move_direction]
+    @range = chess_piece_database[type][:range]
   end
 
   # METHODS TO DETERMINE VARIOUS INFORMATION ABOUT BOTH SIDES AND SELF - BEGIN
@@ -95,7 +99,7 @@ class ChessPiece
   # -----------------------------------------------------
   # METHODS FOR FINDING VALID MOVES - END
 
-  # METHODS TO DEAL WITH CHECK? - NOT FUNCTIONAL YET - BEGIN
+  # METHODS TO DEAL WITH CHECK? - BEGIN
   # --------------------------------------------------------
   def save_moves
     moves = valid_moves
@@ -105,7 +109,8 @@ class ChessPiece
   def cause_check?(coord)
     start = position
     target = board.select_square(coord)
-    move(coord)
+    board.change_square(coord, self)
+    board.change_square(start, EmptySquare.new(board))
     result = commander.check?
     rewind_move(target, start)
     result
@@ -113,7 +118,7 @@ class ChessPiece
 
   def rewind_move(target, start)
     current_pos = position
-    move(start)
+    board.change_square(start, self)
     board.change_square(current_pos, target)
   end
 end

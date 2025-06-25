@@ -62,17 +62,16 @@ class Army
 
   # Methods to create and sort chess army
   def create_chess_piece(type)
-    database = chess_piece_database[type]
+    # database = chess_piece_database[type]
     if type == :pawn
-      Pawn.new(@color, @board, type, database)
+      Pawn.new(@color, @board, type)
     else
-      ChessPiece.new(@color, @board, type, database)
+      ChessPiece.new(@color, @board, type)
     end
   end
 
   def create_army
     army_database.each_with_object([]) do |piece_type, full_set|
-      # database = chess_piece_database[piece_type]
       full_set << create_chess_piece(piece_type)
     end
   end
